@@ -1,7 +1,7 @@
 # nezukochan.ts
 
-<ul>
-<li>npm install</li>
-<li>npm run build</li>
-<li>node dist</li>
-</ul>
+* fill config.json
+* run npm install
+* run npm run build
+* run npm start
+this code modified version from [yumeko](https://github.com/SharifPoetra/yumeko)
