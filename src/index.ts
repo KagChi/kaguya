@@ -12,10 +12,6 @@ require(`./handle/cmdHandle`).default(client)
 
 
 client.on('message', async message => {
-  
-
-
-
  const msg = message;
   if (message.author.bot) return;
   if (!message.content.startsWith(client.config.prefix)) return;
