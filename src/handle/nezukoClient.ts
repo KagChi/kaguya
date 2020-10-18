@@ -16,12 +16,6 @@ class nezukoClient extends Client {
     public commands: Collection<string, ICommand> = new Collection();
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
-    
-
-
-     
-    
-
 }
 
 export default nezukoClient;
