@@ -63,4 +63,4 @@ timestamps.set(msg.author.id, now);
 });
 
 
-client.login(process.env.TOKEN);
+client.login(client.config.token);
