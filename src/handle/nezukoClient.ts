@@ -9,6 +9,7 @@ interface ICommand {
     usage: string[];
     execute: (message: Message, args: string[], client: nezukoClient) => unknown; 
  }
+import '../extenders/Message'
 
 class nezukoClient extends Client {
     public helps: Collection<string, string> = new Collection();
