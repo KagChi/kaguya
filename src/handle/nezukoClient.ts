@@ -12,6 +12,7 @@ interface ICommand {
 import '../extenders/Message'
 
 class nezukoClient extends Client {
+    public snipes: Collection<string, Message> = new Collection();
     public helps: Collection<string, string> = new Collection();
     public color: string = "#fafcc2";
     public commands: Collection<string, ICommand> = new Collection();
