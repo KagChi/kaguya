@@ -9,7 +9,6 @@ interface ICommand {
     usage: string[];
     execute: (message: Message, args: string[], client: nezukoClient) => unknown; 
  }
-const { Player } = require('discord-player')
 import '../extenders/Message'
 
 class nezukoClient extends Client {
@@ -18,7 +17,6 @@ class nezukoClient extends Client {
     public commands: Collection<string, ICommand> = new Collection();
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
-    public player : typeof Player = new Player(this)
 }
 
 export default nezukoClient;
