@@ -8,7 +8,6 @@ const client = new nezukoClient({
 	cacheEmojis: false,
 	cachePresences: false
 });
-require('./handle/musicEvent').default(client)
 require(`./handle/cmdHandle`).default(client)
 require('./handle/event').default(client)
 require('./handle/mongoConnect')
