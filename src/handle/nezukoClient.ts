@@ -1,4 +1,4 @@
-import { Client, Collection, Message } from 'discord.js';
+import { Client, Collection, Message } from 'discord.js-light';
 import * as config from '../config.json';
 interface ICommand {
     name: string;
@@ -9,6 +9,7 @@ interface ICommand {
     usage: string[];
     execute: (message: Message, args: string[], client: nezukoClient) => unknown; 
  }
+const { Player } = require('discord-player')
 import '../extenders/Message'
 
 class nezukoClient extends Client {
@@ -17,6 +18,7 @@ class nezukoClient extends Client {
     public commands: Collection<string, ICommand> = new Collection();
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
+    public player : typeof Player = new Player(this)
 }
 
 export default nezukoClient;

@@ -1,4 +1,3 @@
-  import { MessageEmbed } from 'discord.js';
 const snek = require("node-superfetch");
 export default {
   name: "eval",
