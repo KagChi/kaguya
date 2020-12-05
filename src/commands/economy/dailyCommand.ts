@@ -1,6 +1,5 @@
-const Coins = require("../../models/economy.js").default
+const Coins = require("../../handle/models/economy.js").default
 const Discord = require("discord.js-light")
-const mongoose = require("mongoose")
 import classes from '../../handle/classes/economy'
 const ms = require("parse-ms")
 import data from '../../handle/assets/data/economy'

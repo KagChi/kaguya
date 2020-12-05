@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const delay = ms => new Promise(res => setTimeout(res, ms));
 import { MessageEmbed } from 'discord.js'
 //models
-const bal = require("../../models/economy.js").default
+const bal = require("../models/economy.js").default
 export default class Balance {
     user: any
     constructor(user){

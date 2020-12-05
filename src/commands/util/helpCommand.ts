@@ -12,7 +12,7 @@ export default {
    let module = client.helps.array(); 
   const embed = new MessageEmbed()
         .setColor(client.color)
-        .setFooter("ℹ️ To get additional information use k!help <command name>, <command name> to command what you want");
+        .setFooter(`ℹ️ To get additional information use ${client.config.prefix}help <command name>, <command name> to command what you want`);
       for (const mod of module) {
         embed.addField(`${mod.emot} | ${mod.name}`, mod.cmds.map(x => `\`${x}\``).join(", "));
       }

@@ -1,4 +1,4 @@
-import Coins from "../../models/economy.js"
+import Coins from "../../handle/models/economy.js"
 import classes from '../../handle/classes/economy'
 import datas from '../../handle/assets/data/economy'
 import { MessageEmbed } from "discord.js-light"

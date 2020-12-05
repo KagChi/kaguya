@@ -6,7 +6,8 @@ const client = new nezukoClient({
 	cacheOverwrites: false,
 	cacheRoles: false,
 	cacheEmojis: false,
-	cachePresences: false
+	cachePresences: false,
+	ws: { properties: { $browser: "Discord iOS" } }
 });
 
 require('./handle/musicEvent').default(client)
