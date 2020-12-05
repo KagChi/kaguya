@@ -1,5 +1,5 @@
 import { Client, Collection, Message } from 'discord.js-light';
-import * as config from '../config.json';
+import config from '../config.ts';
 const { Player } = require('discord-player')
 import * as Filters from './assets/filters.json'
 interface ICommand {
