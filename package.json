@@ -14,7 +14,7 @@
     "@discordjs/opus": "^0.3.2",
     "@types/node": "^14.11.2",
     "ascii-table": "0.0.9",
-    "discord-player": "^3.0.3",
+    "discord-player": "github:KagChi/discord-player#main",
     "discord.js-light": "^3.4.2",
     "ffmpeg-static": "^4.2.7",
     "mongoose": "^5.11.2",
