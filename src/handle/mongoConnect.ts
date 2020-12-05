@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-const { ecoDB, basDB } = require("../config.json");
+import config from '../config.ts';
 function connectDb(uri) {
   const db = mongoose.createConnection(uri, {
       useNewUrlParser: true,
@@ -25,7 +25,7 @@ function connectDb(uri) {
   return db;
 }
 
-const basicDb = connectDb(basDB);
-const economyDb = connectDb(ecoDB)
+const basicDb = connectDb(config.basDB);
+const economyDb = connectDb(config.ecoDB)
 module.exports = { basicDb, economyDb }
 
