@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-import config from '../config.ts';
+import config from '../config';
 function connectDb(uri) {
   const db = mongoose.createConnection(uri, {
       useNewUrlParser: true,
