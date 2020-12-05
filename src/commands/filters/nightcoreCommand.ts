@@ -18,7 +18,7 @@ export default {
            const embed = new MessageEmbed()
            .setDescription(`<a:yes:739409625090228275> | Nightcore filter set to \`${statusFilters ? "on" : "off"}\` `)
            .setColor(client.color);
-            await delay(5000);
+            await delay(3500);
             return msg.edit('', embed);
     }
 }
