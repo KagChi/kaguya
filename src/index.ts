@@ -2,12 +2,14 @@ import nezukoClient from './handle/nezukoClient';
 const client = new nezukoClient({
     disableMentions: 'everyone',
     cacheGuilds: true,
-	cacheChannels: false,
+	cacheChannels: true,
 	cacheOverwrites: false,
 	cacheRoles: false,
 	cacheEmojis: false,
 	cachePresences: false
 });
+
+require('./handle/musicEvent').default(client)
 require(`./handle/cmdHandle`).default(client)
 require('./handle/event').default(client)
 require('./handle/mongoConnect')
