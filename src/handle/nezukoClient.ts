@@ -18,6 +18,7 @@ class nezukoClient extends Client {
     public commands: Collection<string, ICommand> = new Collection();
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
+    public snipe: Collection<string, string> = new Collection();
     public player = new Player(this)
 }
 
