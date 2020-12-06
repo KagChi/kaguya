@@ -684,7 +684,7 @@ class Player extends EventEmitter {
     }
 };
 
-export default Player
+module.exports = Player
 
 /**
  * Emitted when a track starts
