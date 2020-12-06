@@ -3,6 +3,7 @@
       "target": "ES6",
       "module": "CommonJS",
       "resolveJsonModule": true,
+      "allowJs": true,
       "typeRoots": [
           "node_modules/@types",
           "src/interfaces"
