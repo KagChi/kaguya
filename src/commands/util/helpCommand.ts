@@ -8,7 +8,7 @@ export default {
     try {
     if (args.length < 1) {
    let module = client.helps.array(); 
-  const embed = new MessageEmbed()
+  const embed = client.embed()
         .setColor(client.color)
         .setFooter(`ℹ️ To get additional information use ${client.config.prefix}help <command name>, <command name> to command what you want`);
       for (const mod of module) {
