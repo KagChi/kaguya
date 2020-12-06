@@ -18,7 +18,7 @@ export default{
       if(!userData) return dataFunction.createNew(message.member, message.channel, data.ecoData(message.member), Coins);
   if (userData.daily !== null && 86400000 - (Date.now() - userData.daily) > 0) {
     let time = ms(86400000 - (Date.now() - userData.daily));
-    let timeEmbed = new Discord.MessageEmbed()
+    let timeEmbed = client.embed()
     .setColor(client.color)
     .setDescription(`<:Cross:618736602901905418> You've already collected your daily reward\n\nCollect it again in ${time.hours}h ${time.minutes}m ${time.seconds}s `);
     message.channel.send(timeEmbed)
