@@ -18,7 +18,7 @@
     "node-superfetch": "^0.1.10",
     "parse-ms": "^2.1.0",
     "rimraf": "3.0.2",
-    "typescript": "^4.0.3"
+    "typescript": "^4.0.3",
     "discord-ytdl-core": "^5.0.0",
     "merge-options": "^3.0.4",
     "moment": "^2.27.0",
