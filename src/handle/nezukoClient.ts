@@ -1,4 +1,4 @@
-import { Client, Collection, Message } from 'discord.js-light';
+import { Client, Collection, Message, MessageEmbed } from 'discord.js-light';
 import config from '../config';
 const { Player } = require('discord-player')
 import * as Filters from './assets/filters.json'
@@ -20,6 +20,7 @@ class nezukoClient extends Client {
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
     public player = new Player(this)
+    embed = () => new MessageEmbed()
 }
 
 export default nezukoClient;
