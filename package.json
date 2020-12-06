@@ -19,6 +19,14 @@
     "parse-ms": "^2.1.0",
     "rimraf": "3.0.2",
     "typescript": "^4.0.3"
+    "discord-ytdl-core": "^5.0.0",
+    "merge-options": "^3.0.4",
+    "moment": "^2.27.0",
+    "node-fetch": "^2.6.0",
+    "soundcloud-scraper": "^4.0.0",
+    "spotify-url-info": "^2.2.0",
+    "youtube-sr": "^2.0.1",
+    "ytdl-core": "^4.0.6"
   },
   "engines": {
     "node": "12.x"
