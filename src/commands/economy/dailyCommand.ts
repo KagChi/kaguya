@@ -1,5 +1,4 @@
-const Coins = require("../../handle/models/economy.js").default
-const Discord = require("discord.js-light")
+import Coins from '../../handle/models/economy.js'
 import classes from '../../handle/classes/economy'
 const ms = require("parse-ms")
 import data from '../../handle/assets/data/economy'
@@ -24,7 +23,7 @@ export default{
     .setDescription(`<:Cross:618736602901905418> You've already collected your daily reward\n\nCollect it again in ${time.hours}h ${time.minutes}m ${time.seconds}s `);
     message.channel.send(timeEmbed)
   } else {
-    let moneyEmbed = new Discord.MessageEmbed()
+    let moneyEmbed = client.embed()
   .setColor(client.color)
   .setDescription(`:white_check_mark: You've collected your daily reward of 2000 coins`);
   message.channel.send(moneyEmbed)
