@@ -8,7 +8,7 @@ export default {
         if(!message.member.voice.channel) return message.reply("to use this command please join voice channel");
         if (!client.player.getQueue(message)) return message.reply(`there are no music playing`);
         const serverQueue = client.player.queues.get(message.guild.id)
-        if(!serverQueue.pause) return message.reply("the music already playing!");
+        if(!serverQueue.paused) return message.reply("the music already playing!");
         client.player.resume(message)
         const embed = client.embed()
         .setDescription(`<a:yes:739409625090228275> | Resumed current queue!`)
