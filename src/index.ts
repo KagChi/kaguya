@@ -7,7 +7,7 @@ const client = new nezukoClient({
     cacheRoles: false,
     cacheEmojis: false,
     cachePresences: false,
-    fetchAllMembers: true
+    fetchAllMembers: true,
     ws: { properties: { $browser: "Discord iOS" } }
 });
 
