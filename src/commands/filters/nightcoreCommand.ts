@@ -1,5 +1,4 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
-import { MessageEmbed } from 'discord.js-light'
 export default {
     name: "nightcore",
     aliases: ["nc"],
@@ -15,7 +14,7 @@ export default {
            nightcore: statusFilters
        })
        const msg = await message.channel.send(`<a:emoji_28:668379222892347402> | Setting Nightcore filter to \`${statusFilters ? "on" : "off"}\`. This may take a few seconds...`);
-           const embed = new MessageEmbed()
+           const embed = client.embed()
            .setDescription(`<a:yes:739409625090228275> | Nightcore filter set to \`${statusFilters ? "on" : "off"}\` `)
            .setColor(client.color);
             await delay(3500);
