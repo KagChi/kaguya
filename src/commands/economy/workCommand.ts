@@ -1,7 +1,6 @@
 import Coins from "../../handle/models/economy.js"
 import classes from '../../handle/classes/economy'
 import datas from '../../handle/assets/data/economy'
-import { MessageEmbed } from "discord.js-light"
 export default{
     name: "work",
     aliases: [],
@@ -38,7 +37,7 @@ export default{
   })
       if(!userSata) return dataFunction.createNew(message.member ,message.channel, datas.ecoData(message.member), Coins);
       if(userSata.money > 10000000000) return message.channel.send({embed: {color: client.color, author:{name: "Blocked!", icon_url: "https://cdn.discordapp.com/attachments/596909080988090369/776293377683619840/do-not-disturb.png"}, description: "Your Money Has Been Limited!"}});
-  let embed = new MessageEmbed() 
+  let embed = client.embed()
     .setColor(client.color) 
     .setDescription(`
     **\<:onlinework:776297662780669962> | ${message.author.username}**, ${JworkR} 💴 **${random}**
