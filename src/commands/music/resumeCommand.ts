@@ -13,6 +13,6 @@ export default {
         const embed = client.embed()
         .setDescription(`<a:yes:739409625090228275> | Resumed current queue!`)
         .setColor(client.color);
-            
-}
+        message.channel.send(embed)
+ }
 }
