@@ -1,5 +1,3 @@
-import { MessageEmbed } from 'discord.js-light';
-
 export default {
   name: "ping",
   aliases: [],
@@ -7,7 +5,7 @@ export default {
   guildOnly: false,
   description: "show bot ping",
   execute(message, args, client) {
-    const embed = new MessageEmbed()
+    const embed = client.embed()
         .addField("Pongg!! :ping_pong:",  Math.round(client.ws.ping) + "ms", true)
         .setColor(client.color)
      message.channel.send(embed)
