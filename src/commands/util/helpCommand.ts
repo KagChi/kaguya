@@ -1,5 +1,3 @@
-import { MessageEmbed } from 'discord.js-light';
-
 export default {
   name: "help",
   aliases: ["h","?"],
@@ -28,14 +26,14 @@ export default {
       cmd = client.commands.get(client.aliases.get(args[0]));
     }
     if (!cmd) {
-      const embed = new MessageEmbed()
+      const embed = client.embed()
         .setColor(client.color)
         .setTitle("🚫 I don't have command like this");
       const search = client.commands.keyArray().filter(x => x.includes(args[0])).map(x => `▫ __**${x}**__`);
       search.length > 0 ? embed.setDescription(`**Are you mean this? :**\n${search.join("\n")}`) : undefined;
       return msg.channel.send(embed);
     }
-    const embed = new MessageEmbed()
+    const embed = client.embed()
       .setColor(client.color)
       .setTitle(`❕ Command info for ${cmd.name}`)
       .setDescription(`**${cmd.description}**`)
