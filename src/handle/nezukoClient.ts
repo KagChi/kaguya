@@ -1,7 +1,6 @@
 import { Client, Collection, Message, MessageEmbed } from 'discord.js-light';
 import config from '../config';
 const { Player } = require('discord-player')
-import * as Filters from './assets/filters.json'
 interface ICommand {
     name: string;
     aliases: string[];
@@ -15,7 +14,6 @@ import './extenders/Message'
 class nezukoClient extends Client {
     public helps: Collection<string, string> = new Collection();
     public color: string = "#fafcc2";
-    public filters: typeof Filters = Filters
     public commands: Collection<string, ICommand> = new Collection();
     public aliases: Collection<string, string> = new Collection();
     public config: typeof config = config;
