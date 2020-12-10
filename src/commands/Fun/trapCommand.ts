@@ -16,6 +16,6 @@ export default class TrapCommand extends Command {
       .setTitle("Random Trap Image :)")
       .setImage(await this.client.fun.trap)
       .setColor(this.client.util.color)
-      message.channel.send(embed)  
+      msg.channel.send(embed)  
   }
  }
