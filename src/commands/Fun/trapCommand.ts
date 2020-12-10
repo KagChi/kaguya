@@ -14,7 +14,7 @@ export default class TrapCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
       const embed = this.client.util.embed()
       .setTitle("Random Trap Image :)")
-      .setImage(await this.client.fun.trap)
+      .setImage(this.client.fun.trap.then(x => x))
       .setColor(this.client.util.color)
       msg.channel.send(embed)  
   }
