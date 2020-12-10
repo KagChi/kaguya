@@ -2,6 +2,7 @@ import { Client, ClientOptions, Collection } from 'discord.js-light'
 import type Command from "./Command";
 import type Listener from "./Listener";
 import config from '../config'
+import Utility from '../util/utility';
 import { readdir } from "fs/promises";
 import { join } from "path";
 import "../extenders";
@@ -11,6 +12,7 @@ export default class KaguyaClient extends Client {
             disableMentions: "everyone"
         })
     }
+    public util: Utility = new Utility(this)
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
     public cooldowns: Collection<string, number> = new Collection()
