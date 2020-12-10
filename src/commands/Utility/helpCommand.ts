@@ -11,7 +11,7 @@ import Command from "../../structures/Command";
     cooldown: 3,
     ownerOnly: false
 })
-export default class PingCommand extends Command {
+export default class helpCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
         const embed: MessageEmbedOptions = {
             color: this.client.util.color,
