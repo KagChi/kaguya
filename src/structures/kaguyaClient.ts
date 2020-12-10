@@ -21,7 +21,7 @@ export default class KaguyaClient extends Client {
             ws: { properties: { $browser: "Discord iOS" } }
         })
     }
-    public fun: Fun = new Fun(this)
+    public fun: Fun = new Fun()
     public util: Utility = new Utility(this)
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
