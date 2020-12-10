@@ -3,7 +3,7 @@ import type Command from "./Command";
 import type Listener from "./Listener";
 import config from '../config'
 import Utility from '../utils/utility';
-import { readdir } from "fs/promises";
+const { readdir } = require("fs").promises;
 import { join } from "path";
 import "../extenders";
 export default class KaguyaClient extends Client {
