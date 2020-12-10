@@ -1,7 +1,6 @@
 import type { Message } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
-const delay = ms as number; => new Promise(res => setTimeout(res, ms));
 @CommandConf({ 
     name: "ping",
     aliases: [""],
@@ -19,8 +18,7 @@ export default class PingCommand extends Command {
     .addField(`⏳ Latency `, `__**${message.createdTimestamp - msg.createdTimestamp}ms**__`)
     .addField("💓 API", `__**${Math.floor(this.client.ws.ping)}ms**__`)
     .setTimestamp();
-     await delay(5000);
-      message.edit('',embed);
+      setTimeout(function() { message.edit('',embed) }, 5000);
    
   }
  }
