@@ -3,15 +3,25 @@ import type Command from "./Command";
 import type Listener from "./Listener";
 import config from '../config'
 import Utility from '../utils/utility';
+import Fun from '../utils/Fun';
 const { readdir } = require("fs").promises;
 import { join } from "path";
 import "../extenders";
 export default class KaguyaClient extends Client {
     public constructor(opt?: ClientOptions){
         super({
-            disableMentions: "everyone"
+            disableMentions: "everyone",
+            cacheGuilds: true,
+            cacheChannels: true,
+            cacheOverwrites: false,
+            cacheRoles: false,
+            cacheEmojis: false,
+            cachePresences: false,
+            fetchAllMembers: true,
+            ws: { properties: { $browser: "Discord iOS" } }
         })
     }
+    public fun: Fun = new Fun(this)
     public util: Utility = new Utility(this)
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
@@ -47,6 +57,7 @@ declare module "discord.js" {
     export interface Client {
         commands: Collection<string, Command>;
         config: typeof config;
+        fun: Fun;
         util: Utility;
         cooldowns: Collection<string, number>;
         loadCommands(): Promise<void>;
