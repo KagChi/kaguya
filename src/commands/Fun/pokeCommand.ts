@@ -2,7 +2,7 @@ import type { Message } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
-    name: "trap",
+    name: "poke",
     aliases: [""],
     description: "random poke image",
     usage: "",
