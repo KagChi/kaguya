@@ -2,7 +2,7 @@ import { Client, ClientOptions, Collection } from 'discord.js-light'
 import type Command from "./Command";
 import type Listener from "./Listener";
 import config from '../config'
-import Utility from '../util/utility';
+import Utility from '../utils/utility';
 import { readdir } from "fs/promises";
 import { join } from "path";
 import "../extenders";
