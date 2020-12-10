@@ -11,7 +11,7 @@
     "typescript": "^3.9.7",
     "rimraf": "^3.0.2"
   },
-    "engines: {
+    "engines": {
      "node": "14.x",
      "yarn:  "1.x"
   }.
