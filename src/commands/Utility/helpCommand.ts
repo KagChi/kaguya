@@ -1,5 +1,5 @@
-import type { Message } from "discord.js";
-import type { MessageEmbedOptions } from "discord.js";
+import type { Message } from "discord.js-light";
+import type { MessageEmbedOptions } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 
