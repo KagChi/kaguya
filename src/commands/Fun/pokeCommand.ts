@@ -4,17 +4,17 @@ import Command from "../../structures/Command";
 @CommandConf({ 
     name: "trap",
     aliases: [""],
-    description: "random trap image 🗿",
+    description: "random poke image",
     usage: "",
     cooldown: 3,
     ownerOnly: false
 })
 
-export default class TrapCommand extends Command {
+export default class PokeCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
-        const image = await this.client.fun.trap()
+        const image = await this.client.fun.poke()
       const embed = this.client.util.embed()
-      .setTitle("Random Trap Image :)")
+      .setTitle("Random Poke Image :)")
       .setImage(image)
       .setColor(this.client.util.color)
       msg.channel.send(embed)  
