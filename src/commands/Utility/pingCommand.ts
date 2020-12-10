@@ -19,7 +19,7 @@ export default class PingCommand extends Command {
     .addField(`⏳ Latency `, `__**${message.createdTimestamp - msg.createdTimestamp}ms**__`)
     .addField("💓 API", `__**${Math.floor(this.client.ws.ping)}ms**__`)
     .setTimestamp();
-    await delay(5000)
+    await delay(5000);
         message.edit('',embed)
    
   }
