@@ -5,4 +5,8 @@ export default class Fun {
        const { data } = await axios.get(baseURL + "poke")
        return data.url
      }
+     public async neko(){
+        const { data } = await axios.get("https://api.lolis.life/neko")
+        return data.url
+     }
  }
