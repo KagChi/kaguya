@@ -12,7 +12,6 @@
     "rimraf": "^3.0.2"
   },
     "engines": {
-     "node": "14.x",
      "yarn":  "1.x"
   },
   "name": "kaguya",
