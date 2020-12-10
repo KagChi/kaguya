@@ -13,7 +13,7 @@ import Command from "../../structures/Command";
 
 export default class PingCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
-    const embed = this.client.embed()
+    const embed = this.client.util.embed()
     .addField("Pong!!!!", this.client.ws.ping)
     msg.channel.send(embed)
    }
