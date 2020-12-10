@@ -12,4 +12,4 @@ declare module "discord.js" {
     }
 }
 
-Structures.extend("User", () => MusicUser);
+Structures.extend("User", () => User);
