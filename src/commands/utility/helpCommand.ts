@@ -14,6 +14,7 @@ import Command from "../../structures/Command";
 export default class PingCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
         const embed: MessageEmbedOptions = {
+            color: this.client.util.color,
             fields: []
         };
 
