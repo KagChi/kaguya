@@ -1,6 +1,6 @@
 import { Structures } from "discord.js";
 
-class MusicUser extends Structures.get("User") {
+class User extends Structures.get("User") {
     public get isDev(): boolean {
         return this.client.config.owners.includes(this.id);
     }
