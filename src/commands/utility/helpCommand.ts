@@ -5,7 +5,7 @@ import Command from "../../structures/Command";
 
 @CommandConf({ 
     name: "help",
-    aliases: ["commands", "?"],
+    aliases: ["commands", "?","h"],
     description: "",
     usage: "",
     cooldown: 3,
