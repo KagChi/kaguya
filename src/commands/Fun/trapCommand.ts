@@ -12,9 +12,10 @@ import Command from "../../structures/Command";
 
 export default class TrapCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
+        const image = await this.client.util.trap()
       const embed = this.client.util.embed()
       .setTitle("Random Trap Image :)")
-      .setImage(this.client.fun.trap.then(x => x))
+      .setImage(image)
       .setColor(this.client.util.color)
       msg.channel.send(embed)  
   }
