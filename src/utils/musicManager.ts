@@ -27,7 +27,9 @@ export default class musicManager {
     
     public async setFilters(msg: Message, newFilters: any){
     const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-
+       Object?.keys(newFilters).forEach((filterName) => {
+                serverQueue.filters[filterName] = newFilters[filterName]
+            })
   }
     public async play(song: any, msg: Message, updateFilters?: boolean){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
