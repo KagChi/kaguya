@@ -71,7 +71,11 @@ export default class musicManager {
                 this.play(serverQueue.songs[0],msg);
               }
             
-          })
+          }).on("error", (err: string) => {
+            console.error(err);
+            serverQueue.songs.shift();
+            this.play(serverQueue.songs[0], msg);
+          });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     try {
         var playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title} from ${song.channel}`);
