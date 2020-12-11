@@ -56,11 +56,20 @@ export default class playCommand extends Command {
               }
         if(serverQueue){             
              serverQueue.songs.push(songModel);
-            serverQueue.textChannel.send(`✅ **${song.title}** has been added to the queue by ${msg.author}`)
+            serverQueue.textChannel.send(`✅ **${song[0].title}** has been added to the queue by ${msg.author}`)
         } else {
             queueConstruct.songs.push(songModel);
         }
         if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
-        return this.client.musicManager.handleVideo(msg, queueConstruct.songs[0] as unknown as string[])
+         try {
+                  const connection = await msg.member?.voice.channel?.join()
+                  queueConstruct.connection = connection
+                  this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
+              } catch (e) {
+                  msg.channel.send(`an error occured \`${e}\` `)
+                  await msg.member?.voice.channel?.leave()
+                  this.client.queue.delete(msg.guild?.id as Guild["id"])
+              }
+        }
     }
 }
