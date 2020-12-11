@@ -47,7 +47,7 @@ export default class musicManager {
    const stream = await ytdl(song.url,{
               filter: 'audioonly',
               quality: "highestaudio",
-              encoderArgs: encoderArgs
+              encoderArgs: encoderArgs,
               opusEncoded: true,
               seek: 0,
               highWaterMark: 1 << 25
