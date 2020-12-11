@@ -6,7 +6,7 @@ export default class Utility {
    public embed = () => new MessageEmbed()
    public async hastebin(text: string){
      const { data } = await axios.post('https://bin.nezukochan.xyz/documents', { payload: text })
-       return `https://bin.nezukochan.xyz/${data.toString}.js`
+       return `https://bin.nezukochan.xyz/${data.key}.js`
       } 
    public parseQuery(queries: string[]) {
     const args = [];
