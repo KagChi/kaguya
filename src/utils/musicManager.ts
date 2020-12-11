@@ -27,7 +27,8 @@ export default class musicManager {
     public async play(song: any , msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
           console.log(song)
-        if (song.length) {
+          console.log(song.url)
+        if (!song) {
             //serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.")
