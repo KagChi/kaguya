@@ -31,14 +31,14 @@ export default class musicManager {
             msg.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
           } 
-          
-            const stream =  ytdl(song.url);
-      
+          try {
+            const stream =  await ytdl(song.url);
+               } catch (error) {
             if (serverQueue) {
-              serverQueue.songs.shift();
-              this.play(serverQueue.songs[0], msg); 
-                     
-    }
+        serverQueue.songs.shift();
+        this.play(serverQueue.songs[0], msg);
+      }
+ }
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
