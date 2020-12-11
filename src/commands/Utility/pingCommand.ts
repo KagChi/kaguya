@@ -12,6 +12,7 @@ import Command from "../../structures/Command";
 
 export default class PingCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
+        try {
    const message = await msg.channel.send("Getting info...");
     const embed = this.client.util.embed()
     .setColor(this.client.util.color)
@@ -19,6 +20,8 @@ export default class PingCommand extends Command {
     .addField("💓 API", `__**${Math.floor(this.client.ws.ping)}ms**__`)
     .setTimestamp();
       setTimeout(function() { message.edit('',embed) }, 5000);
-   
+    } catch (e){
+        msg.channel.send(`An error occured \`${e}\` Try again later!`)
+    }
   }
  }

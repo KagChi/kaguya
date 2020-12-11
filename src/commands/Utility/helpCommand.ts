@@ -13,6 +13,7 @@ import Command from "../../structures/Command";
 })
 export default class helpCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
+        try {
         const embed: MessageEmbedOptions = {
             color: this.client.util.color,
             fields: []
@@ -67,5 +68,8 @@ export default class helpCommand extends Command {
         }
 
         await msg.channel.send({ embed });
+    } catch (e){
+        msg.channel.send(`An error occured \`${e}\` Try again later!`)
     }
+  }
 }

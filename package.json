@@ -3,17 +3,18 @@
     "axios": "^0.21.0",
     "brainly-scraper-v2": "^1.1.2",
     "discord.js-light": "^3.4.2",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "youtube-sr": "^2.0.4"
   },
-   "devDependencies": {
+  "devDependencies": {
     "@types/node": "^14.14.11",
     "eslint": "^6.8.0",
-    "typescript": "^3.9.7",
-    "rimraf": "^3.0.2"
+    "rimraf": "^3.0.2",
+    "typescript": "^3.9.7"
   },
-    "engines": {
-     "yarn":  "1.x",
-     "node": ">=14.x"
+  "engines": {
+    "yarn": "1.x",
+    "node": ">=14.x"
   },
   "name": "kaguya",
   "version": "1.0.0",
