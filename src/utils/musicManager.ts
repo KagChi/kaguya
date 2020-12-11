@@ -30,6 +30,60 @@ export default class musicManager {
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
+        this.playFilters(serverQueue, msg: Message, true)
+  } 
+    public async playFilters(queue: any, message, updateFilters: boolean) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        if (!serverQueue.songs[0]) {
+            await serverQueue.voiceChannel.leave();
+            this.client.queue.delete(msg.guild?.id as Guild["id"]);
+            return serverQueue.textChannel.send("🚫 Music queue ended.")
+          } 
+        const encoderArgsFilters: any[] = []
+    Object.keys(serverQueue.filters).forEach((filterName) => {
+        if (serverQueue.filters[filterName]) {
+            encoderArgsFilters.push(filters[filterName] as any)
+        }
+    })
+    let encoderArgs: string[]
+    if (encoderArgsFilters.length < 1) {
+        encoderArgs = []
+    } else {
+        encoderArgs = ['-af', encoderArgsFilters.join(',')]
+    }
+   const stream = await ytdl(song.url,{
+              filter: 'audioonly',
+              quality: "highestaudio",
+              encoderArgs: encoderArgs,
+              opusEncoded: true,
+              seek: 0,
+              highWaterMark: 1 << 25
+            });
+
+    const dispatcher = serverQueue.connection
+     .play(stream, { 
+         type: 'opus',
+         bitrate: 'auto'
+         }).on("finish", () => {
+            if (serverQueue.loop) {
+                // if loop is on, push the song back at the end of the queue
+                // so it can repeat endlessly
+                let lastSong = serverQueue.songs.shift();
+                serverQueue.songs.push(lastSong);
+                this.play(serverQueue.songs[0], msg);
+              } else {
+                // Recursively play the next song
+                serverQueue.songs.shift();
+                this.play(serverQueue.songs[0],msg);
+              }
+            
+          }).on("error", (err: string) => {
+            console.error(err);
+            serverQueue.songs.shift();
+            this.play(serverQueue.songs[0], msg);
+          });
+    dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
+
   }
     public async play(song: any, msg: Message, updateFilters?: boolean){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
