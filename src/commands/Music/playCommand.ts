@@ -72,4 +72,3 @@ export default class playCommand extends Command {
               }
         }
     }
-}
