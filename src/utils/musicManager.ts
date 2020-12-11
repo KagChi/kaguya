@@ -36,10 +36,10 @@ export default class musicManager {
          
             const stream = await ytdl(song.url);
                
-            if (serverQueue) {
+            /*if (serverQueue) {
         serverQueue.songs.shift();
        await this.play(serverQueue.songs[0], msg);
-      }
+      }*/
  
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
