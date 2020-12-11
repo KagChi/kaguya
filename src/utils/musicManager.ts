@@ -49,7 +49,7 @@ export default class musicManager {
      .play(stream, { 
          type: "opus",
          filter: 'audioonly',
-         quality: "highestaudio"
+         quality: "highestaudio",
          encoderArgs,
          opusEncoded: true,
          seek: 0,
