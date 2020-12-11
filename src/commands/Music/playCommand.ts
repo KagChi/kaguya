@@ -55,10 +55,10 @@ export default class playCommand extends Command {
                   durationFormatted: song[0].durationFormatted,
                   url: `https://www.youtube.com/watch?v=${song[0].id}`
               }
-             serverQueue.songs.push(song);
+             serverQueue.songs.push(songModel);
             serverQueue.textChannel.send(`✅ **${song.title}** has been added to the queue by ${msg.author}`)
         } else {
-            queueConstruct.songs.push(song);
+            queueConstruct.songs.push(songModel);
         }
         if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
         return this.client.musicManager.handleVideo(msg, queueConstruct.songs[0] as unknown as string[])
