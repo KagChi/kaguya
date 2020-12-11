@@ -33,7 +33,7 @@ export default class musicManager {
             return serverQueue.textChannel.send("🚫 Music queue ended.")
           } 
          
-            const stream = await ytdl(song[0].url);
+            const stream = await ytdl(song.url);
                
             if (serverQueue) {
         serverQueue.songs.shift();
