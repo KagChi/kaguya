@@ -1,4 +1,3 @@
- 
 import type { Client, Guild, Message } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
@@ -93,7 +92,7 @@ export default class musicManager {
       }
 }
 
-    public async play(song: any, msg: Message, updateFilters?: boolean){
+    public async play(song: any, msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
             await serverQueue.voiceChannel.leave();
