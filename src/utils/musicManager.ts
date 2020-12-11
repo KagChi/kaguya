@@ -33,12 +33,6 @@ export default class musicManager {
           } 
          
             const stream = await ytdl(song.url);
-               
-            /*if (serverQueue) {
-        serverQueue.songs.shift();
-       await this.play(serverQueue.songs[0], msg);
-      }*/
- 
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
@@ -55,8 +49,10 @@ export default class musicManager {
      .play(stream, { 
          type: "opus",
          filter: 'audioonly',
+         quality: "highestaudio"
          encoderArgs,
          opusEncoded: true,
+         seek: 0,
          highWaterMark: 1 << 25 })
          .on("finish", () => {
             if (serverQueue.loop) {
