@@ -32,11 +32,11 @@ export default class musicManager {
             return serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
           } 
          
-            const stream =  await ytdl(song.url);
+            const stream = await ytdl(song.url);
                
             if (serverQueue) {
         serverQueue.songs.shift();
-        this.play(serverQueue.songs[0], msg);
+       await this.play(serverQueue.songs[0], msg);
       }
  
     const encoderArgsFilters: any[] = []
