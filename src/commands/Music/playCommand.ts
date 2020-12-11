@@ -42,7 +42,7 @@ export default class playCommand extends Command {
                 connection: null as any,
                 songs: [] as string[],
                 loop: false,
-                filters: null as any,
+                filters: [] as any,
                 volume: 100,
                 playing: true
               };
