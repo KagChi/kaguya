@@ -33,9 +33,8 @@ export default class musicManager {
         this.playFilters(serverQueue, msg as Message, true)
   } 
     
-    public async playFilters(song: any, msg: Message, updateFilters?: boolean){
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        if (!song) {
+    public async playFilters(serverQueue, msg: Message, updateFilters?: boolean){
+        if (!serverQueue.songs[0]) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.")
@@ -86,7 +85,7 @@ export default class musicManager {
           });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     try {
-        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title}`);
+        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${serverQueue.songs[0].title}`);
       } catch (error) {
         console.error(error);
       }
