@@ -60,6 +60,7 @@ export default class playCommand extends Command {
         } else {
             queueConstruct.songs.push(song);
         }
-        return this.client.musicManager.handleVideo(msg, song[0] as unknown as string[])
+        if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
+        return this.client.musicManager.handleVideo(msg, queueConstruct.songs[0] as unknown as string[])
     }
 }
