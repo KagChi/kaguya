@@ -1,3 +1,4 @@
+ 
 import type { Client, Guild, Message } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
@@ -32,17 +33,19 @@ export default class musicManager {
             })
         this.playFilters(serverQueue, msg as Message, true)
   } 
-    public async playFilters(queue: any, msg: Message, updateFilters: boolean) {
+    
+    public async playFilters(song: any, msg: Message, updateFilters?: boolean){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        if (!serverQueue.songs[0]) {
+        if (!song) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.")
           } 
-        const encoderArgsFilters: any[] = []
+         
+    const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
-            encoderArgsFilters.push(filters[filterName] as any
+            encoderArgsFilters.push(filters[filterName] as any)
         }
     })
     let encoderArgs: string[]
@@ -83,8 +86,13 @@ export default class musicManager {
             this.play(serverQueue.songs[0], msg);
           });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
+    try {
+        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title}`);
+      } catch (error) {
+        console.error(error);
+      }
+}
 
-  }
     public async play(song: any, msg: Message, updateFilters?: boolean){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
