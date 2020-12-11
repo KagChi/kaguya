@@ -28,17 +28,17 @@ export default class musicManager {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
             serverQueue.voiceChannel.leave();
-            msg.client.queue.delete(msg.guild?.id as Guild["id"]);
+            this.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
           } 
-          try {
+         
             const stream =  await ytdl(song.url);
-               } catch (error) {
+               
             if (serverQueue) {
         serverQueue.songs.shift();
         this.play(serverQueue.songs[0], msg);
       }
- }
+ 
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
