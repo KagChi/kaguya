@@ -4,9 +4,11 @@ import type Listener from "./Listener";
 import config from '../config'
 import Utility from '../utils/utility';
 import Fun from '../utils/Fun';
+import MusicManager from '../utils/musicManager'
 const { readdir } = require("fs").promises;
 import { join } from "path";
 import "../extenders";
+import musicManager from '../utils/musicManager';
 export default class KaguyaClient extends Client {
     public constructor(opt?: ClientOptions){
         super({
@@ -21,7 +23,9 @@ export default class KaguyaClient extends Client {
             ws: { properties: { $browser: "Discord iOS" } }
         })
     }
+    public queue: Collection<string, string> = new Collection()
     public fun: Fun = new Fun()
+    public musicManager: MusicManager = new MusicManager(this)
     public util: Utility = new Utility(this)
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
@@ -57,6 +61,8 @@ declare module "discord.js" {
     export interface Client {
         commands: Collection<string, Command>;
         config: typeof config;
+        queue: Collection<string, string>
+        musicManager: musicManager
         fun: Fun;
         util: Utility;
         cooldowns: Collection<string, number>;
