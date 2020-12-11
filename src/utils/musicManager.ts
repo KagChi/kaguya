@@ -30,9 +30,9 @@ export default class musicManager {
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
-        this.playFilters(serverQueue, msg, true)
+        this.playFilters(serverQueue, msg as Message, true)
   } 
-    public async playFilters(queue: any, message, updateFilters: boolean) {
+    public async playFilters(queue: any, msg: Message, updateFilters: boolean) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!serverQueue.songs[0]) {
             await serverQueue.voiceChannel.leave();
@@ -42,7 +42,7 @@ export default class musicManager {
         const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
-            encoderArgsFilters.push(filters[filterName] as any)
+            encoderArgsFilters.push(filters[filterName] as any
         }
     })
     let encoderArgs: string[]
