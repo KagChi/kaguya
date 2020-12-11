@@ -27,9 +27,9 @@ export default class musicManager {
     public async play(song: { url: string; title: any; channel: any; } , msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
-            //serverQueue.voiceChannel.leave();
+            serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
-            await serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
+            return serverQueue.textChannel.send("🚫 Music queue ended.")
           } 
          
             const stream = await ytdl(song.url);
