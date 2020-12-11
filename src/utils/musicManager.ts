@@ -33,7 +33,7 @@ export default class musicManager {
      this.play(queue: any, msg: Message, true)
     
     }
-    public async play(song: any , msg: Message, updateFilters?: any){
+    public async play(song: any, msg: Message, updateFilters?: boolean){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
             await serverQueue.voiceChannel.leave();
