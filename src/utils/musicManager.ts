@@ -24,7 +24,16 @@ const filters: any = {
 
 export default class musicManager {
     constructor(public readonly client : Client){}
-    public async play(song: any , msg: Message){
+    
+    public async setFilters(msg: Message, newFilters: any){
+    const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+       Object?.keys(newFilters).forEach((filterName) => {
+                serverQueue.filters[filterName] = newFilters[filterName]
+            })
+     this.play(queue: any, msg: Message, true)
+    
+    }
+    public async play(song: any , msg: Message, updateFilters?: any){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
             await serverQueue.voiceChannel.leave();
