@@ -61,6 +61,7 @@ export default class playCommand extends Command {
             queueConstruct.songs.push(songModel);
         }
         if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
+        if (!serverQueue) {
          try {
                   const connection = await msg.member?.voice.channel?.join()
                   queueConstruct.connection = connection
@@ -70,5 +71,6 @@ export default class playCommand extends Command {
                   await msg.member?.voice.channel?.leave()
                   this.client.queue.delete(msg.guild?.id as Guild["id"])
               }
+           }
         }
     }
