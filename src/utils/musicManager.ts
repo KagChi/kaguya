@@ -24,7 +24,7 @@ const filters: any = {
 
 export default class musicManager {
     constructor(public readonly client : Client){}
-    public async play(song: any , msg: Message){
+    public async play(song: { url: string; title: any; channel: any; } , msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
             //serverQueue.voiceChannel.leave();
