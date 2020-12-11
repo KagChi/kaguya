@@ -56,7 +56,6 @@ export default class musicManager {
          type: "opus",
          filter: 'audioonly',
          encoderArgs,
-         quality: "highestaudio",
          opusEncoded: true,
          highWaterMark: 1 << 25 })
          .on("finish", () => {
