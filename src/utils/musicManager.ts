@@ -50,9 +50,9 @@ export default class musicManager {
          filter: 'audioonly',
          opusEncoded: true,
          encoderArgs,
-         seek: seekTime / 1000,
-         highWaterMark: 1 << 25})
-         .on("finish", () => {
+         seek: 0,
+         highWaterMark: 1 << 25
+         }).on("finish", () => {
             if (serverQueue.loop) {
                 // if loop is on, push the song back at the end of the queue
                 // so it can repeat endlessly
