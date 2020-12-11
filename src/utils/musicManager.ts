@@ -33,7 +33,7 @@ export default class musicManager {
         this.playFilters(serverQueue, msg as Message, true)
   } 
     
-    public async playFilters(serverQueue, msg: Message, updateFilters?: boolean){
+    public async playFilters(serverQueue: any, msg: Message, updateFilters?: boolean){
         if (!serverQueue.songs[0]) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
@@ -52,7 +52,7 @@ export default class musicManager {
     } else {
         encoderArgs = ['-af', encoderArgsFilters.join(',')]
     }
-   const stream = await ytdl(song.url,{
+   const stream = await ytdl(serverQueue.songs[0].url,{
               filter: 'audioonly',
               quality: "highestaudio",
               encoderArgs: encoderArgs,
