@@ -47,13 +47,11 @@ export default class musicManager {
     }
     const dispatcher = serverQueue.connection
      .play(stream, { 
-         type: "opus",
          filter: 'audioonly',
-         quality: "highestaudio",
-         encoderArgs,
          opusEncoded: true,
-         seek: 0,
-         highWaterMark: 1 << 25 })
+         encoderArgs,
+         seek: seekTime / 1000,
+         highWaterMark: 1 << 25})
          .on("finish", () => {
             if (serverQueue.loop) {
                 // if loop is on, push the song back at the end of the queue
