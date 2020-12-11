@@ -46,7 +46,6 @@ export default class playCommand extends Command {
                 volume: 100,
                 playing: true
               };
-        if(serverQueue){
               const songModel: any = {
                   id: song[0].id,
                   title: song[0].title,
@@ -55,6 +54,7 @@ export default class playCommand extends Command {
                   durationFormatted: song[0].durationFormatted,
                   url: `https://www.youtube.com/watch?v=${song[0].id}`
               }
+        if(serverQueue){             
              serverQueue.songs.push(songModel);
             serverQueue.textChannel.send(`✅ **${song.title}** has been added to the queue by ${msg.author}`)
         } else {
