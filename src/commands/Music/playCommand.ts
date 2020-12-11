@@ -48,6 +48,7 @@ export default class playCommand extends Command {
               };
             Object.keys(filters).forEach((f) => {
             queueConstruct.filters[f] = false
+             })
               const songModel: any = {
                   id: song[0].id,
                   title: song[0].title,
