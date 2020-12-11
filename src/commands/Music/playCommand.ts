@@ -46,7 +46,7 @@ export default class playCommand extends Command {
                 volume: 100,
                 playing: true
               };
-            Object.keys(filters).forEach((f) => {
+            Object?.keys(filters).forEach((f) => {
             queueConstruct.filters[f] = false
              })
               const songModel: any = {
