@@ -24,43 +24,6 @@ const filters: any = {
 
 export default class musicManager {
     constructor(public readonly client : Client){}
-    public async handleVideo(msg: Message, song: any){
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        const songModel: any = {
-            id: song.id,
-            title: song.title,
-            thumbnail: song.thumbnail.url,
-            duration: song.duration,
-            durationFormatted: song.durationFormatted,
-            url: `https://www.youtube.com/watch?v=${song.id}`
-        }
-        
-      
-      
-        if(!serverQueue){
-            const queueConstruct = {
-                textChannel: msg.channel,
-                voiceChannel: msg.member?.voice.channel,
-                connection: null as any,
-                songs: [] as string[],
-                loop: false,
-                filters: filters,
-                volume: 100,
-                playing: true
-              };
-              this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
-              queueConstruct.songs.push(songModel);
-              try {
-                  const connection = await msg.member?.voice.channel?.join()
-                  queueConstruct.connection = connection
-                  this.play(queueConstruct.songs[0] as any, msg)
-              } catch (e) {
-                  msg.channel.send(`an error occured \`${e}\` `)
-                  await msg.member?.voice.channel?.leave()
-                  this.client.queue.delete(msg.guild?.id as Guild["id"])
-              }
-        }
-    }
     public async play(song: { url: string; title: any; channel: any; }, msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!song) {
