@@ -50,11 +50,6 @@ export default class musicManager {
               };
               this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
               queueConstruct.songs.push(songModel);
-              if (!song) {
-                serverQueue.channel.leave();
-                this.client.queue.delete((msg.guild?.id as Guild["id"]));
-                return serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
-              }
               try {
                   const connection = await msg.member?.voice.channel?.join()
                   queueConstruct.connection = connection
@@ -64,30 +59,15 @@ export default class musicManager {
                   await msg.member?.voice.channel?.leave()
                   this.client.queue.delete(msg.guild?.id as Guild["id"])
               }
-        } else if(serverQueue) {
-            serverQueue.songs.push(song);
-            serverQueue.textChannel.send(`✅ **${song.title}** has been added to the queue by ${msg.author}`)
-        } else {
-            const queueConstruct = {
-                textChannel: msg.channel,
-                voiceChannel: msg.member?.voice.channel,
-                connection: null as any,
-                songs: [] as string[],
-                loop: false,
-                filters: filters,
-                volume: 100,
-                playing: true
-              };
-            queueConstruct.songs.push(song);
         }
     }
     public async play(song: { url: string; title: any; channel: any; }, msg: Message){
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        /*if (!song) {
+        if (!song) {
             serverQueue.voiceChannel.leave();
             msg.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.").catch(console.error);
-          } */
+          } 
           
             const stream =  ytdl(song.url);
       
