@@ -47,6 +47,7 @@ export default class musicManager {
     }
     const dispatcher = serverQueue.connection
      .play(stream, { 
+         type: 'opus',
          filter: 'audioonly',
          opusEncoded: true,
          encoderArgs,
