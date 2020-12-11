@@ -81,7 +81,7 @@ export default class musicManager {
           });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     try {
-        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song[0].title}`);
+        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title}`);
       } catch (error) {
         console.error(error);
       }
