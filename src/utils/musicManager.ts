@@ -32,14 +32,6 @@ export default class musicManager {
             return serverQueue.textChannel.send("🚫 Music queue ended.")
           } 
          
-           const stream = await ytdl(song.url,{
-              filter: 'audioonly',
-              quality: "highestaudio",
-              encoderArgs,
-              opusEncoded: true,
-              seek: 0,
-              highWaterMark: 1 << 25
-            });
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
@@ -52,6 +44,15 @@ export default class musicManager {
     } else {
         encoderArgs = ['-af', encoderArgsFilters.join(',')]
     }
+   const stream = await ytdl(song.url,{
+              filter: 'audioonly',
+              quality: "highestaudio",
+              encoderArgs,
+              opusEncoded: true,
+              seek: 0,
+              highWaterMark: 1 << 25
+            });
+
     const dispatcher = serverQueue.connection
      .play(stream, { 
          type: 'opus',
