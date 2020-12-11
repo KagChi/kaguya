@@ -3,7 +3,7 @@ import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
     name: "ping",
-    aliases: [""],
+    aliases: [],
     description: "get bot latency",
     usage: "",
     cooldown: 3,

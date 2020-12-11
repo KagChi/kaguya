@@ -3,7 +3,7 @@ import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
     name: "neko",
-    aliases: [""],
+    aliases: [],
     description: "random neko image",
     usage: "",
     cooldown: 3,

@@ -3,7 +3,7 @@ import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
     name: "poke",
-    aliases: [""],
+    aliases: [],
     description: "random poke image",
     usage: "",
     cooldown: 3,
