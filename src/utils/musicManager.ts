@@ -39,6 +39,10 @@ export default class musicManager {
         if(!song) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
+            const embed = this.client.util.embed()
+            .setTitle("Ran Out Of Song")
+            .setColor(this.client.util.color)
+            .setDescription("We've run out of songs! Better queue up some tunes.")
             return serverQueue.textChannel.send("🚫 Music queue ended.")
           } 
          
