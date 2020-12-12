@@ -6,6 +6,7 @@
     "discord.js-light": "^3.4.2",
     "dotenv": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
+    "mongoose": "^5.11.7",
     "youtube-sr": "^2.0.4",
     "ytdl-core": "^4.1.4",
     "ytdl-core-discord": "^1.2.4",
