@@ -9,7 +9,8 @@
     "ffmpeg-static": "^4.2.7",
     "youtube-sr": "^2.0.4",
     "ytdl-core": "^4.1.4",
-    "ytdl-core-discord": "^1.2.4"
+    "ytdl-core-discord": "^1.2.4",
+    "ytpl": "^2.0.0-alpha.3"
   },
   "devDependencies": {
     "@types/node": "^14.14.11",

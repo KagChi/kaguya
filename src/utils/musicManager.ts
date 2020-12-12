@@ -25,75 +25,18 @@ const filters: any = {
 export default class musicManager {
     constructor(public readonly client : Client){}
     
-    public async setFilters(msg: Message, newFilters: any){
+    public async setFilters(msg: Message, newFilters: any): Promise<void> {
     const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
-        this.playFilters(serverQueue, msg as Message, true)
+        this.play(serverQueue.songs[0], msg as Message, true)
   } 
     
-    public async playFilters(serverQueue: any, msg: Message, updateFilters?: boolean){
-        if (!serverQueue.songs[0]) {
-            await serverQueue.voiceChannel.leave();
-            this.client.queue.delete(msg.guild?.id as Guild["id"]);
-            return serverQueue.textChannel.send("🚫 Music queue ended.")
-          } 
-         
-    const encoderArgsFilters: any[] = []
-    Object.keys(serverQueue.filters).forEach((filterName) => {
-        if (serverQueue.filters[filterName]) {
-            encoderArgsFilters.push(filters[filterName] as any)
-        }
-    })
-    let encoderArgs: string[]
-    if (encoderArgsFilters.length < 1) {
-        encoderArgs = []
-    } else {
-        encoderArgs = ['-af', encoderArgsFilters.join(',')]
-    }
-   const stream = await ytdl(serverQueue.songs[0].url,{
-              filter: 'audioonly',
-              quality: "highestaudio",
-              encoderArgs: encoderArgs,
-              opusEncoded: true,
-              seek: 0,
-              highWaterMark: 1 << 25
-            });
-
-    const dispatcher = serverQueue.connection
-     .play(stream, { 
-         type: 'opus',
-         bitrate: 'auto'
-         }).on("finish", () => {
-            if (serverQueue.loop) {
-                // if loop is on, push the song back at the end of the queue
-                // so it can repeat endlessly
-                let lastSong = serverQueue.songs.shift();
-                serverQueue.songs.push(lastSong);
-                this.play(serverQueue.songs[0], msg);
-              } else {
-                // Recursively play the next song
-                serverQueue.songs.shift();
-                this.play(serverQueue.songs[0],msg);
-              }
-            
-          }).on("error", (err: string) => {
-            console.error(err);
-            serverQueue.songs.shift();
-            this.play(serverQueue.songs[0], msg);
-          });
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
-    try {
-        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${serverQueue.songs[0].title}`);
-      } catch (error) {
-        console.error(error);
-      }
-}
-
-    public async play(song: any, msg: Message){
+    public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        if (!song) {
+        const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + 0 as any : undefined!
+        if(!song) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
             return serverQueue.textChannel.send("🚫 Music queue ended.")
@@ -116,7 +59,7 @@ export default class musicManager {
               quality: "highestaudio",
               encoderArgs: encoderArgs,
               opusEncoded: true,
-              seek: 0,
+              seek: seekTime / 1000,
               highWaterMark: 1 << 25
             });
 
@@ -149,7 +92,7 @@ export default class musicManager {
         console.error(error);
       }
 }
-    public async getSongs(query: string){
+    public async getSongs(query: string): Promise<any> {
         const search  = await YouTube.search(query)
         return search
     }
