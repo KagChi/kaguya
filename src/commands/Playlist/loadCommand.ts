@@ -66,22 +66,15 @@ export default class loadCommand extends Command {
                 url: `https://www.youtube.com/watch?v=${playlist.music[i].id}`,
                 requester: msg.author
             })
-            queueConstruct.songs.push({
-                id: playlist.music[i].id,
-                title: playlist.music[i].title,
-                thumbnail: playlist.music[i].thumbnail.url,
-                duration: playlist.music[i].duration,
-                durationFormatted: playlist.music[i].durationFormatted,
-                url: `https://www.youtube.com/watch?v=${playlist.music[i].id}`,
-                requester: msg.author
-            });
         }
         if(serverQueue){
             songModel.forEach((x: any) => { 
             serverQueue.songs.push(x as any);
            })
         } else {
-           // queueConstruct.songs.push(songModel);
+           songModel.forEach((x: any) => { 
+            queueConstruct.songs.push(x as any);
+           })
         }
         if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
         if(!serverQueue) {
