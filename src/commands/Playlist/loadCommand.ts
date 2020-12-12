@@ -25,7 +25,7 @@ const filters: any = {
 @CommandConf({ 
     name: "load",
     aliases: [],
-    description: "load music that you already created! ",
+    description: "load music from playlist that you already created! ",
     usage: "",
     cooldown: 3,
     ownerOnly: false
