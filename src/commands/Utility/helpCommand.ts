@@ -65,6 +65,10 @@ export default class helpCommand extends Command {
                     value: commands.map(x => `\`${x.config.name}\``).join(", ")
                 });
             }
+             embed.fields?.push({
+                  name: "Links",
+                  value: "[Github](https://github.com/KagChi/kaguya) | [Invite](https://discord.com/oauth2/authorize?client_id=707045201461641236&scope=bot&permissions=0)"
+            });
         }
 
         await msg.channel.send({ embed });
