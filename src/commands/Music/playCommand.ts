@@ -45,6 +45,7 @@ export default class playCommand extends Command {
                 connection: null as any,
                 songs: [] as string[],
                 loop: false,
+                additionalStreamTime: 0,
                 filters: [] as any,
                 volume: 100,
                 playing: true
