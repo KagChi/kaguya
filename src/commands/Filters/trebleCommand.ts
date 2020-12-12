@@ -26,11 +26,11 @@ export default class trebleCommand extends Command {
         let statusFilters = serverQueue.filters.nightcore
         statusFilters = !statusFilters
        this.client.musicManager.setFilters(msg, {
-           nightcore: statusFilters
+           treble: statusFilters
        })
        const message = await msg.channel.send(`<a:emoji_28:668379222892347402> | Setting Treble filter to \`${statusFilters ? "on" : "off"}\`. This may take a few seconds...`);
            const embed = this.client.util.embed()
-           .setDescription(`<a:yes:739409625090228275> | Nightcore filter set to \`${statusFilters ? "on" : "off"}\` `)
+           .setDescription(`<a:yes:739409625090228275> | treble filter set to \`${statusFilters ? "on" : "off"}\` `)
            .setColor(this.client.util.color);
             await delay(3500);
             return message.edit('', embed);
