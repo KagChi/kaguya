@@ -42,7 +42,7 @@ export default class loadCommand extends Command {
             name: args[0]
         }) as any
         if(!playlist) return msg.channel.send(`<:error:739430541094420512> Sorry, **${args[0]}** Doesnt Exist, perhabs a typo or haven't created playlist?`);
-        let songModel = {} as any
+        let songModel; as any
         const queueConstruct = {
             textChannel: msg.channel,
             voiceChannel: msg.member?.voice.channel,
