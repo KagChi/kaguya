@@ -67,7 +67,9 @@ export default class musicManager {
               seek: seekTime / 1000,
               highWaterMark: 1 << 25
             });
-
+    if (seekTime) {
+       serverQueue.additionalStreamTime = seekTime
+       }
     const dispatcher = serverQueue.connection
      .play(stream, { 
          type: 'opus',
