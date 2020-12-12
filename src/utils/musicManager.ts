@@ -1,6 +1,7 @@
-import type { Client, Guild, Message } from "discord.js-light";
+import type { Client, Guild, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
+const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const filters: any = {
     bassboost: 'bass=g=20,dynaudnorm=f=200',
     '8D': 'apulsator=hz=0.08',
@@ -92,7 +93,88 @@ export default class musicManager {
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     try {
         if(updateFilters) return;
-        const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title}`);
+        const embed = this.client.util.embed()
+        .setImage(song.thumbnail)
+        .setDescription(`▶ **Start Playing :**\n[${song.title}](${song.url})\n\`[${song.durationFormatted}]\` [${song.requester}]`)
+        .setColor(this.client.util.color)
+        const playingMessage = await serverQueue.textChannel.send(embed);
+        await playingMessage.react("⏭");
+        await playingMessage.react("⏸");
+        await playingMessage.react("▶");
+        await playingMessage.react("🔁");
+        await playingMessage.react("⏹");
+
+        const filter = (reaction: any, user: User) => user.id === song.requester.id;
+        const collector = playingMessage.createReactionCollector(filter, {
+            time: song.duration > 0 ? song.duration : 50000
+          });
+
+          collector.on("collect", async (reaction: any, user: User) => {
+              if(!serverQueue) return;
+              try {
+              switch (reaction.emoji.name) {
+                case '⏭':
+                    this.skip(serverQueue.textChannel)
+                    const skipEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏩ skipped the song`)
+                    const skipMsg = await serverQueue.textChannel.send(skipEmbed)
+                    collector.stop();
+                    reaction.users.remove(user)
+                    await delay(3500)
+                    skipMsg.delete()
+                    break;
+                case '⏸':
+                    if(!serverQueue.playing) return;
+                    const pauseEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏸ paused the music.`)
+                    const pauseMsg = await serverQueue.textChannel.send(pauseEmbed)
+                    this.pause(serverQueue.textChannel)
+                    reaction.users.remove(user)
+                    await delay(3500)
+                    pauseMsg.delete()
+                    break;
+                case '▶':
+                    if(serverQueue.playing) return;
+                    const resumeEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ▶ resumed the music!`)
+                    const resumeMsg = await serverQueue.textChannel.send(resumeEmbed)
+                    this.resume(serverQueue.textChannel)
+                    reaction.users.remove(user)
+                    await delay(3500)
+                    resumeMsg.delete()
+                    break;
+                case '🔁':
+                    serverQueue!.loop = !serverQueue?.loop;
+                    const loopEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`Turned Loop ${serverQueue.loop ? "**on** 🔄" : "**off** ❌"}`)
+                    const loopMsg = await serverQueue.textChannel.send(loopEmbed)
+                    reaction.users.remove(user)
+                    await delay(3500)
+                    loopMsg.delete()
+                    break;
+                case '⏹':
+                    const stopEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏹ stopped the music!`)
+                    const stopMessage = await serverQueue.textChannel.send(stopEmbed)
+                    reaction.users.remove(user)
+                    collector.stop();
+                    await delay(3500)
+                    stopMessage.delete()
+                    break;
+
+                    default:
+                        break;
+              }
+            } catch (e) {
+                console.log(e.message)
+            }
+          })
+       
       } catch (error) {
         console.error(error);
       }
@@ -111,10 +193,12 @@ export default class musicManager {
     public pause(msg: Message) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
         serverQueue.connection.dispatcher.pause();
+        serverQueue.playing = false
     }
     public resume(msg: Message) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
         serverQueue.connection.dispatcher.resume();
+        serverQueue.playing = true
     }
     public async getSongs(query: string): Promise<any> {
         const search  = await YouTube.search(query)

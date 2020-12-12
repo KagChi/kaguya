@@ -58,7 +58,8 @@ export default class playCommand extends Command {
                   thumbnail: song[0].thumbnail.url,
                   duration: song[0].duration,
                   durationFormatted: song[0].durationFormatted,
-                  url: `https://www.youtube.com/watch?v=${song[0].id}`
+                  url: `https://www.youtube.com/watch?v=${song[0].id}`,
+                  requester: msg.author
               }
         if(serverQueue){             
              serverQueue.songs.push(songModel);
