@@ -162,6 +162,7 @@ export default class musicManager {
                     .setDescription(`${user} ⏹ stopped the music!`)
                     const stopMessage = await serverQueue.textChannel.send(stopEmbed)
                     reaction.users.remove(user)
+                    this.stop(serverQueue.textChannel)
                     collector.stop();
                     await delay(3500)
                     stopMessage.delete()
