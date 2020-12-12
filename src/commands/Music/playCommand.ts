@@ -63,7 +63,11 @@ export default class playCommand extends Command {
               }
         if(serverQueue){             
              serverQueue.songs.push(songModel);
-            serverQueue.textChannel.send(`✅ **${song[0].title}** has been added to the queue by ${msg.author}`)
+             const embed = this.client.util.embed()
+             .setColor(this.client.util.color)
+             .setDescription(`☑ Added \`${song[0].title}\` to queue\n[${msg.author}] \`[${song[0].durationFormatted}]\``)
+             .setThumbnail(song[0].thumbnail.url)
+            serverQueue.textChannel.send(embed)
         } else {
             queueConstruct.songs.push(songModel);
         }

@@ -191,6 +191,11 @@ export default class musicManager {
         serverQueue.connection.dispatcher.end();
     }
 
+    public setVolume(msg: Message, value: number) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        serverQueue.volume = value;
+        serverQueue.connection.dispatcher.setVolume(value / 100);
+    }
     public skip(msg: Message) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         serverQueue.connection.dispatcher.end();
