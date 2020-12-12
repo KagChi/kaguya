@@ -57,7 +57,7 @@ export default class loadCommand extends Command {
             queueConstruct.filters[f] = false
              })
         for(let i = 0; i < playlist.music.length; i++){
-            const songModel = {
+            songModel.push({
                 id: playlist.music[i].id,
                 title: playlist.music[i].title,
                 thumbnail: playlist.music[i].thumbnail.url,
@@ -65,8 +65,16 @@ export default class loadCommand extends Command {
                 durationFormatted: playlist.music[i].durationFormatted,
                 url: `https://www.youtube.com/watch?v=${playlist.music[i].id}`,
                 requester: msg.author
-            }
-            queueConstruct.songs.push(songModel);
+            })
+            queueConstruct.songs.push({
+                id: playlist.music[i].id,
+                title: playlist.music[i].title,
+                thumbnail: playlist.music[i].thumbnail.url,
+                duration: playlist.music[i].duration,
+                durationFormatted: playlist.music[i].durationFormatted,
+                url: `https://www.youtube.com/watch?v=${playlist.music[i].id}`,
+                requester: msg.author
+            });
         }
         if(serverQueue){ 
             serverQueue.songs.push(songModel);
