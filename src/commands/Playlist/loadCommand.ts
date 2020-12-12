@@ -56,6 +56,7 @@ export default class loadCommand extends Command {
           Object?.keys(filters).forEach((f) => {
             queueConstruct.filters[f] = false
              })
+console.log(songModel)
         for(let i = 0; i < playlist.music.length; i++){
             songModel.push({
                 id: playlist.music[i].id,
