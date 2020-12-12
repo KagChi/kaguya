@@ -76,8 +76,10 @@ export default class loadCommand extends Command {
                 requester: msg.author
             });
         }
-        if(serverQueue){ 
-            serverQueue.songs.push(songModel);
+        if(serverQueue){
+            songModel.forEach(x => { 
+            serverQueue.songs.push(x);
+           })
         } else {
            // queueConstruct.songs.push(songModel);
         }
