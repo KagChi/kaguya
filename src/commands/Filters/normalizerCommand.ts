@@ -23,10 +23,10 @@ export default class normalizerCommand extends Command {
         .setThumbnail(msg.author?.avatarURL({ dynamic: true }) as any)
         if(!serverQueue) return msg.channel.send(noQueue);
         const song = this.client.queue.get(msg.guild?.id as Guild["id"])?.songs as any
-        let statusFilters = serverQueue.filters.reverse
+        let statusFilters = serverQueue.filters.normalizer
         statusFilters = !statusFilters
        this.client.musicManager.setFilters(msg, {
-           reverse: statusFilters
+           normalizer: statusFilters
        })
        const message = await msg.channel.send(`<a:emoji_28:668379222892347402> | Setting normalizer filter to \`${statusFilters ? "on" : "off"}\`. This may take a few seconds...`);
            const embed = this.client.util.embed()
