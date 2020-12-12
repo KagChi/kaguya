@@ -56,7 +56,6 @@ export default class loadCommand extends Command {
           Object?.keys(filters).forEach((f) => {
             queueConstruct.filters[f] = false
              })
-console.log(songModel)
         for(let i = 0; i < playlist.music.length; i++){
             songModel.push({
                 id: playlist.music[i].id,
@@ -80,7 +79,7 @@ console.log(songModel)
         if(serverQueue){ 
             serverQueue.songs.push(songModel);
         } else {
-            queueConstruct.songs.push(songModel);
+           // queueConstruct.songs.push(songModel);
         }
         if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
         if(!serverQueue) {
