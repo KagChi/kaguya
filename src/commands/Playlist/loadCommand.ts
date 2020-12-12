@@ -48,6 +48,7 @@ export default class loadCommand extends Command {
             voiceChannel: msg.member?.voice.channel,
             connection: null as any,
             songs: [] as any,
+            additionalStreamTime: 0,
             loop: false,
             filters: [] as any,
             volume: 100,
