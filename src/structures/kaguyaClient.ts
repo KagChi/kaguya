@@ -1,4 +1,4 @@
-import { Client, ClientOptions, Collection } from 'discord.js-light'
+import { Client, ClientOptions, Collection, Iqueue, TextChannel, VoiceChannel } from 'discord.js-light'
 import type Command from "./Command";
 import type Listener from "./Listener";
 import config from '../config'
@@ -23,10 +23,10 @@ export default class KaguyaClient extends Client {
             ws: { properties: { $browser: "Discord iOS" } }
         })
     }
-    public queue: Collection<string, string> = new Collection()
     public fun: Fun = new Fun()
     public musicManager: MusicManager = new MusicManager(this)
     public util: Utility = new Utility(this)
+    public queue: Collection<string, Iqueue> = new Collection()
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
     public cooldowns: Collection<string, number> = new Collection()
@@ -61,12 +61,21 @@ declare module "discord.js" {
     export interface Client {
         commands: Collection<string, Command>;
         config: typeof config;
-        queue: Collection<string, string>
+        queue: Collection<string, Iqueue>
         musicManager: musicManager
         fun: Fun;
         util: Utility;
         cooldowns: Collection<string, number>;
         loadCommands(): Promise<void>;
         loadEventListeners(): Promise<void>;
+    }
+    export interface Iqueue {
+        textChannel: TextChannel,
+        voiceChannel: VoiceChannel,
+        songs: string[],
+        loop: boolean,
+        filters: string[],
+        volume: number,
+        playing: boolean
     }
 }

@@ -43,7 +43,7 @@ export default class musicManager {
             .setTitle("Ran Out Of Song")
             .setColor(this.client.util.color)
             .setDescription("We've run out of songs! Better queue up some tunes.")
-            return serverQueue.textChannel.send("🚫 Music queue ended.")
+            return serverQueue.textChannel.send(embed)
           } 
          
     const encoderArgsFilters: any[] = []
