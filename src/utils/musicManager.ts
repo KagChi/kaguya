@@ -91,6 +91,7 @@ export default class musicManager {
           });
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
     try {
+        if(updateFilters) return;
         const playingMessage = await serverQueue.textChannel.send(`Now Playing: ${song.title}`);
       } catch (error) {
         console.error(error);
@@ -98,7 +99,13 @@ export default class musicManager {
 }
     
     public stop(msg: Message) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        serverQueue.songs = [];
+        serverQueue.connection.dispatcher.end();
+    }
+
+    public skip(msg: Message) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         serverQueue.connection.dispatcher.end();
     }
     public pause(msg: Message) {

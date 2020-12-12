@@ -8,7 +8,7 @@ import { exec } from 'child_process';
     description: "",
     usage: "",
     cooldown: 3,
-    ownerOnly: false
+    ownerOnly: true
 })
 
 export default class execCommand extends Command {

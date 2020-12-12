@@ -32,8 +32,11 @@ const filters: any = {
 
 export default class playCommand extends Command {
     public async exec(msg: Message, args: string[]) {
+        const voiceChannel = msg.member?.voice.channel
+        if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
+        if (this.client.queue.has(msg.guild?.id as Guild["id"]) && voiceChannel.id !== this.client.queue.get(msg.guild?.id as Guild["id"])?.voiceChannel.id)return msg.channel.send(`You must be in **${this.client.queue?.get(msg.guild?.id as Guild["id"])?.voiceChannel.name}** to play music`);
         const query = args.join(" ")
-        if(!query) return msg.channel.send("No query provided!");
+        if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         const queueConstruct = {
