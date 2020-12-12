@@ -23,7 +23,7 @@ export default class surroundingCommand extends Command {
         .setThumbnail(msg.author?.avatarURL({ dynamic: true }) as any)
         if(!serverQueue) return msg.channel.send(noQueue);
         const song = this.client.queue.get(msg.guild?.id as Guild["id"])?.songs as any
-        let statusFilters = serverQueue.filters.reverse
+        let statusFilters = serverQueue.filters.surrounding
         statusFilters = !statusFilters
        this.client.musicManager.setFilters(msg, {
            surrounding: statusFilters
