@@ -174,6 +174,10 @@ export default class musicManager {
                 console.log(e.message)
             }
           })
+
+          collector.on("end", () => {
+            playingMessage.delete({ timeout: 2000 })
+          });
        
       } catch (error) {
         console.error(error);

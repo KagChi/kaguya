@@ -71,6 +71,7 @@ export default class playCommand extends Command {
         if(!serverQueue) {
          try {
                   const connection = await msg.member?.voice.channel?.join()
+                  msg.guild?.me?.voice.setSelfDeaf(true)
                   queueConstruct.connection = connection
                   this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
               } catch (e) {
