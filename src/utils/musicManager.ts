@@ -92,6 +92,19 @@ export default class musicManager {
         console.error(error);
       }
 }
+    
+    public stop(msg: Message) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        serverQueue.connection.dispatcher.end();
+    }
+    public pause(msg: Message) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        serverQueue.connection.dispatcher.pause();
+    }
+    public resume(msg: Message) {
+        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        serverQueue.connection.dispatcher.resume();
+    }
     public async getSongs(query: string): Promise<any> {
         const search  = await YouTube.search(query)
         return search
