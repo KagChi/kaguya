@@ -120,7 +120,6 @@ export default class musicManager {
                     .setDescription(`${user} ⏩ skipped the song`)
                     const skipMsg = await serverQueue.textChannel.send(skipEmbed)
                     collector.stop();
-                    reaction.users.remove(user)
                     await delay(3500)
                     skipMsg.delete()
                     break;
@@ -131,7 +130,6 @@ export default class musicManager {
                     .setDescription(`${user} ⏸ paused the music.`)
                     const pauseMsg = await serverQueue.textChannel.send(pauseEmbed)
                     this.pause(serverQueue.textChannel)
-                    reaction.users.remove(user)
                     await delay(3500)
                     pauseMsg.delete()
                     break;
@@ -142,7 +140,6 @@ export default class musicManager {
                     .setDescription(`${user} ▶ resumed the music!`)
                     const resumeMsg = await serverQueue.textChannel.send(resumeEmbed)
                     this.resume(serverQueue.textChannel)
-                    reaction.users.remove(user)
                     await delay(3500)
                     resumeMsg.delete()
                     break;
@@ -152,7 +149,6 @@ export default class musicManager {
                     .setColor(this.client.util.color)
                     .setDescription(`Turned Loop ${serverQueue.loop ? "**on** 🔄" : "**off** ❌"}`)
                     const loopMsg = await serverQueue.textChannel.send(loopEmbed)
-                    reaction.users.remove(user)
                     await delay(3500)
                     loopMsg.delete()
                     break;
@@ -161,7 +157,6 @@ export default class musicManager {
                     .setColor(this.client.util.color)
                     .setDescription(`${user} ⏹ stopped the music!`)
                     const stopMessage = await serverQueue.textChannel.send(stopEmbed)
-                    reaction.users.remove(user)
                     this.stop(serverQueue.textChannel)
                     collector.stop();
                     await delay(3500)
