@@ -36,7 +36,7 @@ export default class musicManager {
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        const seekTime = updateFilters ? Math.round(serverQueue.connection.dispatcher.streamTime + 0) : undefined!
+        const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + queue.additionalStreamTime : undefined!
         if(!song) {
             await serverQueue.voiceChannel.leave();
             this.client.queue.delete(msg.guild?.id as Guild["id"]);
@@ -69,7 +69,7 @@ export default class musicManager {
             });
     if (seekTime) {
        serverQueue.additionalStreamTime = seekTime
-       }
+      }
     const dispatcher = serverQueue.connection
      .play(stream, { 
          type: 'opus',
