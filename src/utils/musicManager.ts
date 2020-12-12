@@ -59,6 +59,9 @@ export default class musicManager {
     } else {
         encoderArgs = ['-af', encoderArgsFilters.join(',')]
     }
+       if (seekTime) {
+       serverQueue.additionalStreamTime = seekTime
+      }
    const stream = await ytdl(song.url,{
               filter: 'audioonly',
               quality: "highestaudio",
@@ -67,9 +70,6 @@ export default class musicManager {
               seek: seekTime / 1000,
               highWaterMark: 1 << 25
             });
-    if (seekTime) {
-       serverQueue.additionalStreamTime = seekTime
-      }
     const dispatcher = serverQueue.connection
      .play(stream, { 
          type: 'opus',
