@@ -15,7 +15,7 @@ const fs = require("fs");
 })
 
 export default class ytdlCommand extends Command {
-    public async exec(msg: Message, args: string[]): Promise<void> {
+    public async exec(msg: Message, args: string[]): Promise<any> {
         try {
         const url = args.join(" ")
         if(!url) return msg.reply("input youtube url");
