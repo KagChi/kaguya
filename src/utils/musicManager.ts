@@ -200,14 +200,14 @@ export default class musicManager {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         serverQueue.connection.dispatcher.end();
     }
-    public pause(msg: Message) {
+    public async pause(msg: Message) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
-        serverQueue.connection.dispatcher.pause();
+        await serverQueue.connection.dispatcher.pause();
         serverQueue.playing = false
     }
-    public resume(msg: Message) {
+    public async resume(msg: Message) {
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
-        serverQueue.connection.dispatcher.resume();
+        await serverQueue.connection.dispatcher.resume();
         serverQueue.playing = true
     }
     public async getSongs(query: string): Promise<any> {
