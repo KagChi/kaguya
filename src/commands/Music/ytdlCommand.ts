@@ -27,7 +27,7 @@ export default class ytdlCommand extends Command {
         await delay(3000)
         const buffer = fs.readFileSync("music/"+ fileName +".mp3")
         const file = new MessageAttachment(buffer, music[0].title + '.mp3')
-        msg.channel.send(file)
+        await msg.channel.send(file)
        await fs.unlinkSync("music/"+ fileName + ".mp3")
 function randomName(length: number) {
     var result = "" as any ;
