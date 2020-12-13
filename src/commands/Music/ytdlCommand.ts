@@ -19,8 +19,8 @@ export default class ytdlCommand extends Command {
         try {
         const query = args.join(" ")
         if(!query) return msg.reply("input music name!");
-        const song = await this.client.musicManager.getSongs(query);
-        const url = "https://www.youtube.com?v=" + song[0].id 
+        const music = await this.client.musicManager.getSongs(query);
+        const url = "https://www.youtube.com?v=" + music[0].id 
         const fileName = randomName(6)
         const song = await ytdl(url, { quality: "highestaudio", format: "mp3" }).pipe(fs.createWriteStream("music/"+ fileName + ".mp3"))
         const mess = await msg.channel.send("Please wait... saving file to disk...")
