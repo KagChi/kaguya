@@ -26,6 +26,7 @@ export default class ytdlCommand extends Command {
         const buffer = fs.readFileSync("music/"+ fileName +".mp3")
         const file = new MessageAttachment(buffer, 'file.mp3')
         msg.channel.send(file)
+       await fs.unlinkSync("music/"+ fileName + ".mp3")
 function randomName(length: number) {
     var result = "" as any ;
     var characters =
@@ -34,7 +35,7 @@ function randomName(length: number) {
     for (var i = 0; i < length; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
-    return "CL" + result;
+    return "KGY" + result;
   } 
   
   } catch (e){
