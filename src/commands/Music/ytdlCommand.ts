@@ -2,7 +2,7 @@ import type { Message } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
-const ytdl = require("discord-ytdl-core");
+const ytdl = require("ytdl-core");
 const { MessageAttachment } = require("discord.js-light");
 const fs = require("fs");
 @CommandConf({ 
@@ -20,7 +20,7 @@ export default class ytdlCommand extends Command {
         const url = args.join(" ")
         if(!url) return msg.reply("input youtube url");
         const fileName = randomName(6)
-        const song = await ytdl(url, { quality: "highestaudio",filter: "audioonly" }).pipe(fs.createWriteStream("music/"+ fileName + ".mp3"))
+        const song = await ytdl(url, { quality: "highestaudio", format: "mp3" }).pipe(fs.createWriteStream("music/"+ fileName + ".mp3"))
         const mess = await msg.channel.send("Please wait... saving file to disk...")
         await delay(3000)
         const buffer = fs.readFileSync("music/"+ fileName +".mp3")
