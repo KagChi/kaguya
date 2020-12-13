@@ -132,6 +132,7 @@ export default class musicManager {
                     .setDescription(`${user} ⏸ paused the music.`)
                     const pauseMsg = await serverQueue.textChannel.send(pauseEmbed)
                     this.pause(serverQueue.textChannel)
+                    await reaction.users.remove(user)
                     await delay(3500)
                     pauseMsg.delete()
                     break;
@@ -142,6 +143,7 @@ export default class musicManager {
                     .setDescription(`${user} ▶ resumed the music!`)
                     const resumeMsg = await serverQueue.textChannel.send(resumeEmbed)
                     this.resume(serverQueue.textChannel)
+                    await reaction.users.remove(user)
                     await delay(3500)
                     resumeMsg.delete()
                     break;
@@ -151,6 +153,7 @@ export default class musicManager {
                     .setColor(this.client.util.color)
                     .setDescription(`Turned Loop ${serverQueue.loop ? "**on** 🔄" : "**off** ❌"}`)
                     const loopMsg = await serverQueue.textChannel.send(loopEmbed)
+                    await reaction.users.remove(user)
                     await delay(3500)
                     loopMsg.delete()
                     break;
