@@ -19,10 +19,11 @@ export default class ytdlCommand extends Command {
         try {
         const url = args.join(" ")
         if(!url) return msg.reply("input youtube url");
-        const song = await ytdl(url, { quality: "highestaudio",filter: "audioonly" }).pipe(fs.createWriteStream("music/"+ randomName(6) + ".mp3"))
+        const fileName = randomName(6)
+        const song = await ytdl(url, { quality: "highestaudio",filter: "audioonly" }).pipe(fs.createWriteStream("music/"+ fileName + ".mp3"))
         const mess = await msg.channel.send("Please wait... saving file to disk...")
         await delay(3000)
-        const buffer = fs.readFileSync("music/"+ randomName(6) +".mp3")
+        const buffer = fs.readFileSync("music/"+ fileName +".mp3")
         const file = new MessageAttachment(buffer, 'file.mp3')
         msg.channel.send(file)
 function randomName(length: number) {
