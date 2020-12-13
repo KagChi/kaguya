@@ -10,7 +10,7 @@ const fs = require("fs");
     aliases: ["ytdl"],
     description: "download music from youtube",
     usage: "",
-    cooldown: 3,
+    cooldown: 30,
     ownerOnly: false
 })
 
