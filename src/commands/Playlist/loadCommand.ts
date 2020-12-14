@@ -59,8 +59,6 @@ export default class loadCommand extends Command {
              })
         for(let i = 0; i < playlist.music.length; i++){
             songModel.push({
-                playlist: true,
-                playlistTitle: args[0],
                 id: playlist.music[i].id,
                 title: playlist.music[i].title,
                 thumbnail: playlist.music[i].thumbnail.url,
@@ -76,7 +74,7 @@ export default class loadCommand extends Command {
             const embed = this.client.util.embed()
             .setColor(this.client.util.color)
             .setDescription(`☑ Added \`${playlist.name}\` playlist to queue\n[${msg.author}] \`[${playlist.music.length} Music]\``)
-            .setThumbnail(serverQueue.songs[0].thumbnail.url)
+            .setThumbnail(playlist.music[0].thumbnail.url)
             return serverQueue.textChannel.send(embed);
            })
         } else {
