@@ -39,7 +39,7 @@ export default class ytdlCommand extends Command {
     await delay(3000)
     fs.readFile('./music/' + fileName + '.mp3', (err: any, contents: any) => {
       if(err) return msg.channel.send(`An error occured \`${err}\` Try again later!`)
-      dbx.filesUpload({path: '../../../music/' + fileName + '.mp3', contents}).then(x => console.log(x))
+      dbx.filesUpload({path: '../../music/' + fileName + '.mp3', contents}).then(x => console.log(x))
     })
     }
   }
