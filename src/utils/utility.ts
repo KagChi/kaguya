@@ -51,4 +51,11 @@ export default class Utility {
     }
     return input === null || input === undefined ? "Void" : input.constructor.name;
   }
+  public chunk(array: string[], chunkSize: number) {
+    const temp = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+      temp.push(array.slice(i, i + chunkSize));
+    }
+    return temp;
+  }
 }
