@@ -64,7 +64,7 @@ export default class playCommand extends Command {
               }
         if(song.length > 1) {
             for(let i = 0; i < song.length; i++) {
-                 serverQueue.songs.push({
+                 queueConstruct.songs.push({
                      id: song[i].id,
                      title: song[i].title,
                      thumbnail: song[i].thumbnail.url,
