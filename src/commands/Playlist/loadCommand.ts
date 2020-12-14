@@ -59,6 +59,8 @@ export default class loadCommand extends Command {
              })
         for(let i = 0; i < playlist.music.length; i++){
             songModel.push({
+                playlist: true,
+                playlistTitle: args[0],
                 id: playlist.music[i].id,
                 title: playlist.music[i].title,
                 thumbnail: playlist.music[i].thumbnail.url,
