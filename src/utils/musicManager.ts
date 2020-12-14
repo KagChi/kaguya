@@ -219,9 +219,9 @@ export default class musicManager {
         const finalData = [] as any
         for(let i = 0; i < data.length; i++){
           finalData.push({
-            id: data.id,
-            title: data.title,
-            durationFormatted: data.duration,
+            id: data[i].id,
+            title: data[i].title,
+            durationFormatted: data[i].duration,
             duration: 0,
             thumbnail: null
           })
