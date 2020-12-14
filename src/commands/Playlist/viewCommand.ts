@@ -50,7 +50,7 @@ export default class viewCommand extends Command {
       }
     } else {
         embed.setColor(this.client.util.color)
-        embed.setDescription(music.map((x: any, i: any) => `\`${i + 1}\`. __**[${x.title}](${x.info.uri})**__ `).join("\n"));
+        embed.setDescription(music.map((x: any, i: any) => `\`${i + 1}\`. __**[${x.title}](https://www.youtube.com/watch?v=${x.id})**__ `).join("\n"));
         return msg.channel.send({ embed: embed });
             }
     
