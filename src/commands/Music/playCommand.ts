@@ -43,7 +43,7 @@ export default class playCommand extends Command {
                 textChannel: msg.channel,
                 voiceChannel: msg.member?.voice.channel,
                 connection: null as any,
-                songs: [] as string[],
+                songs: [] as any[],
                 loop: false,
                 additionalStreamTime: 0,
                 filters: [] as any,
@@ -63,7 +63,7 @@ export default class playCommand extends Command {
                   requester: msg.author
               }
         if(song.length > 1) {
-            for(let i = 0; i < song.length; i++) {
+            for(let i = 0; i < song.length; i++){
                  queueConstruct.songs.push({
                      id: song[i].id,
                      title: song[i].title,
@@ -72,7 +72,7 @@ export default class playCommand extends Command {
                      durationFormatted: song[i].durationFormatted,
                      url: `https://www.youtube.com/watch?v=${song[i].id}`,
                      requester: msg.author
-                 })
+                 }) 
             }
         }
         if(serverQueue){             
