@@ -62,6 +62,19 @@ export default class playCommand extends Command {
                   url: `https://www.youtube.com/watch?v=${song[0].id}`,
                   requester: msg.author
               }
+        if(song.length > 1) {
+            for(let i = 0; i < song.length; i++) {
+                 serverQueue.songs.push({
+                     id: song[i].id,
+                     title: song[i].title,
+                     thumbnail: song[i].thumbnail.url,
+                     duration: song[i].duration,
+                     durationFormatted: song[i].durationFormatted,
+                     url: `https://www.youtube.com/watch?v=${song[i].id}`,
+                     requester: msg.author
+                 })
+            }
+        }
         if(serverQueue){             
              serverQueue.songs.push(songModel);
              const embed = this.client.util.embed()
