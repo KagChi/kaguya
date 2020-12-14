@@ -1,7 +1,6 @@
 import type { Message } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
-import { Dropbox } from 'dropbox';
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const ytdl = require("ytdl-core");
 const fileName = randomName(6)
@@ -35,13 +34,8 @@ export default class ytdlCommand extends Command {
   
   } catch (e){
     msg.channel.send(`An error occured \`${e}\` Try again later!`)
-    const dbx = new Dropbox({ accessToken: process.env.dbx })
-    await delay(3000)
-    fs.readFile('./music/' + fileName + '.mp3', (err: any, contents: any) => {
-      if(err) return msg.channel.send(`An error occured \`${err}\` Try again later!`)
-      dbx.filesUpload({path: '../../../music/' + fileName + '.mp3', contents}).then(x => console.log(x))
-    })
-    }
+   
+  }
   }
  }
 
