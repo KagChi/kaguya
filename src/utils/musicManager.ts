@@ -30,7 +30,7 @@ export default class musicManager {
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
-            encoderArgsFilters.push(filters[filterName] as any)
+            encoderArgsFilters.push(this.client.util.filters[filterName] as any)
         }
     })
     let encoderArgs: string[]
