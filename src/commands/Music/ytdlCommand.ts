@@ -24,7 +24,7 @@ export default class ytdlCommand extends Command {
         const url = "https://www.youtube.com?v=" + music[0].id 
         const song = await ytdl(url, { quality: "highestaudio", format: "mp3", filter: "audioonly" }).pipe(fs.createWriteStream("music/"+ fileName + ".mp3"))
         const mess = await msg.channel.send("Please wait... saving file to disk...")
-        await delay(12000)
+        await delay(3000)
         const buffer = fs.readFileSync("music/"+ fileName +".mp3")
         const file = new MessageAttachment(buffer, music[0].title + '.mp3')
         await msg.channel.send(file)
