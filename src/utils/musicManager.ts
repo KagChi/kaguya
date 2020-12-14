@@ -216,7 +216,7 @@ export default class musicManager {
       if(playlistReg.test(query)) {
         const search = await YoutubePL(query)
         const data = search.items as any
-        const finalData = {} as any
+        const finalData = [] as any
         for(let i = 0; i < data.length; i++){
           finalData.push({
             id: data.id,
