@@ -223,7 +223,7 @@ export default class musicManager {
             title: data[i].title,
             durationFormatted: data[i].duration,
             duration: 0,
-            thumbnail: data[i].bestThumbnail.url
+            thumbnail: data[i].bestThumbnail
           })
         }
         return finalData;
