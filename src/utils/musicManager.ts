@@ -1,6 +1,7 @@
 import type { Client, Guild, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
+import YoutubePL = require("ytpl");
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 const filters: any = {
     bassboost: 'bass=g=20,dynaudnorm=f=200',
@@ -211,6 +212,22 @@ export default class musicManager {
         serverQueue.playing = true
     }
     public async getSongs(query: string): Promise<any> {
+      const playlistReg = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+      if(playlistReg.test(query)) {
+        const search = await YoutubePL(query)
+        const data = search.items as any
+        const finalData = {} as any
+        for(let i = 0; i < data.length; i++){
+          finalData.push({
+            id: data.id,
+            title: data.title,
+            durationFormatted: data.duration,
+            duration: 0,
+            thumbnail: null
+          })
+        }
+        return finalData;
+      }
         const search  = await YouTube.search(query)
         return search
     }
