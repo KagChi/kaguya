@@ -34,7 +34,6 @@ export default class ytdlCommand extends Command {
   
   } catch (e){
     msg.channel.send(`An error occured \`${e}\` Try again later!`)
-   
   }
   }
  }

@@ -38,6 +38,7 @@ export default class playCommand extends Command {
         const query = args.join(" ")
         if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
+        if(!song) return msg.channel.send("Could not find any results");
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         const queueConstruct = {
                 textChannel: msg.channel,
@@ -62,7 +63,7 @@ export default class playCommand extends Command {
                   url: `https://www.youtube.com/watch?v=${song[0].id}`,
                   requester: msg.author
               }
-        if(song.length > 1) {
+        if(song[0].playlist) {
             for(let i = 0; i < song.length; i++){
                  queueConstruct.songs.push({
                      id: song[i].id,
@@ -75,7 +76,25 @@ export default class playCommand extends Command {
                  }) 
             }
         }
-        if(serverQueue){             
+        if(serverQueue){
+            if(song[0].playlist){
+                for(let i = 0; i < song.length; i++){
+                  serverQueue.songs.push({
+                        id: song[i].id,
+                        title: song[i].title,
+                        thumbnail: song[i].thumbnail.url,
+                        duration: song[i].duration,
+                        durationFormatted: song[i].durationFormatted,
+                        url: `https://www.youtube.com/watch?v=${song[i].id}`,
+                        requester: msg.author
+                    });
+                }
+                const embed = this.client.util.embed()
+                .setColor(this.client.util.color)
+                .setDescription(`☑ Added \`${song[0].playlistTitle}\` playlist to queue\n[${msg.author}] \`[${song.length} Music]\``)
+                .setThumbnail(song[0].thumbnail.url)
+                return serverQueue.textChannel.send(embed);
+            }             
              serverQueue.songs.push(songModel);
              const embed = this.client.util.embed()
              .setColor(this.client.util.color)

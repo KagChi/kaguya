@@ -219,6 +219,8 @@ export default class musicManager {
         const finalData = [] as any
         for(let i = 0; i < data.length; i++){
           finalData.push({
+            playlist: true,
+            playlistTitle: search.title,
             id: data[i].id,
             title: data[i].title,
             durationFormatted: data[i].duration,
@@ -228,7 +230,18 @@ export default class musicManager {
         }
         return finalData;
       }
-        const search  = await YouTube.search(query)
-        return search
-    }
+        const search  = await YouTube.search(query) as any
+        const finalData = [] as any
+        for(let i = 0; i < search.length; i++){
+          finalData.push({
+            playlist: false,
+            id: search[i].id,
+            title: search[i].title,
+            durationFormatted: search[i].durationFormatted,
+            duration: search[i].duration,
+            thumbnail: search[i].thumbnail
+          })
+        }
+        return finalData;    
+      }
 }
