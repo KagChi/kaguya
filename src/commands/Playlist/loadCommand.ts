@@ -71,12 +71,12 @@ export default class loadCommand extends Command {
         if(serverQueue){
             songModel.forEach((x: any) => { 
             serverQueue.songs.push(x as any);
-            const embed = this.client.util.embed()
+           })
+           const embed = this.client.util.embed()
             .setColor(this.client.util.color)
             .setDescription(`☑ Added \`${playlist.name}\` playlist to queue\n[${msg.author}] \`[${playlist.music.length} Music]\``)
             .setThumbnail(playlist.music[0].thumbnail.url)
             return serverQueue.textChannel.send(embed);
-           })
         } else {
            songModel.forEach((x: any) => { 
             queueConstruct.songs.push(x as any);
