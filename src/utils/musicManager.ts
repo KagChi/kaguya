@@ -212,7 +212,7 @@ export default class musicManager {
         serverQueue.playing = true
     }
     public async getSongs(query: string): Promise<any> {
-      const playlistReg = /^.*(youtu.be\/|list=)([^#\&\?]*).*/
+      const playlistReg = /^https?:\/\/(www.youtube.com|youtube.com|youtu.be)\/playlist(.*)$/
       if(playlistReg.test(query)) {
         const search = await YoutubePL(query)
         const data = search.items as any
