@@ -75,8 +75,8 @@ export default class loadCommand extends Command {
             serverQueue.songs.push(x as any);
             const embed = this.client.util.embed()
             .setColor(this.client.util.color)
-            .setDescription(`☑ Added \`${serverQueue.song[0].playlistTitle}\` playlist to queue\n[${msg.author}] \`[${playlist.music.length} Music]\``)
-            .setThumbnail(serverQueue.song[0].thumbnail.url)
+            .setDescription(`☑ Added \`${playlist.name}\` playlist to queue\n[${msg.author}] \`[${playlist.music.length} Music]\``)
+            .setThumbnail(serverQueue.songs[0].thumbnail.url)
             return serverQueue.textChannel.send(embed);
            })
         } else {
