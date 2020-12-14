@@ -5,6 +5,7 @@
     "discord-ytdl-core": "^5.0.0",
     "discord.js-light": "^3.4.2",
     "dotenv": "^8.2.0",
+    "dropbox": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
     "mongoose": "^5.11.7",
     "youtube-sr": "^2.0.4",
@@ -27,7 +28,7 @@
   "description": "a bot",
   "main": "dist",
   "author": "KagChi",
-  "license": "GNU 3.0",
+  "license": "GNU v3",
   "scripts": {
     "build": "rimraf dist && tsc",
     "start": "node dist"
