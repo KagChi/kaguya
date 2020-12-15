@@ -27,5 +27,7 @@ export default class deleteMusicCommand extends Command {
          .setThumbnail(newData[0].thumbnail.url)
          .setColor(this.client.util.color)
         msg.channel.send(embed);
+      await playlist.updateOne({ music: newDatas });
+        
     }
 }
