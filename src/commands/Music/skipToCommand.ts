@@ -10,7 +10,7 @@ import Command from "../../structures/Command";
     ownerOnly: false
 })
 export default class skipToCommand extends Command {
-    public async exec(msg: Message, args: string[]) {
+    public async exec(msg: Message, args: as any) {
     	const voiceChannel = msg.member?.voice.channel
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
@@ -21,20 +21,20 @@ export default class skipToCommand extends Command {
         .setColor(this.client.util.color)
         .setThumbnail(msg.author?.avatarURL({ dynamic: true }) as any)
         if(!serverQueue) return msg.channel.send(noQueue);
-        if (!args.length) return message.reply(`Usage: skipto <Queue Number>`)
-        if (isNaN(args[0])) return message.reply(`Usage: skipto <Queue Number>`)
+        if (!args.length) return msg.reply(`Usage: skipto <Queue Number>`)
+        if (isNaN(args[0] as any)) return msg.reply(`Usage: skipto <Queue Number>`)
         if (args[0] > serverQueue.songs.length)
-          return message.reply(`The queue is only ${serverQueue.songs.length} songs long!`)
+          return msg.reply(`The queue is only ${serverQueue.songs.length} songs long!`)
       serverQueue.playing = true;
         if (serverQueue.loop) {
-          for (let i = 0; i < args[0] - 2; i++) {
-            serverQueue.songs.push(queue.songs.shift());
+          for (let i = 0; i < args[0]- 2; i++) {
+            serverQueue.songs.push(serverQueue.songs.shift());
           }
         } else {
           serverQueue.songs = serverQueue.songs.slice(args[0] - 2);
         }
         this.client.musicManager.skip(msg);
-    const embed = new MessageEmbed()
+    const embed = this.client.util.embed()
      .setDescription(`${msg.author} ⏭️ Skipped ${args[0] - 1} songs`)
      .setColor(this.client.util.color)
      .setThumbnail(msg.author?.displayAvatarURL({ dynamic: true }))
