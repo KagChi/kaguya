@@ -18,7 +18,7 @@ export default class createCommand extends Command {
             name: args[0]
         }) as any
         if(!args[0]) return msg.channel.send("Cant create playlist with empty name.");
-        if(playlist?.length > 5) return msg.channel.send("Cant create playlist more than 5!");
+        if(playlist?.length >= 5) return msg.channel.send("Cant create playlist more than 5!");
         if(playlist) return msg.reply(`${args[0]} Is already created, input another name!`);
         if(!playlist){
             const data = {
