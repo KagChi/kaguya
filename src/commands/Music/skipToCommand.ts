@@ -1,4 +1,4 @@
-import type { Message } from "discord.js-light";
+import type { Guild, Message, User } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
