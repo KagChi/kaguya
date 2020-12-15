@@ -20,10 +20,11 @@ export default class addCommand extends Command {
         const playlist = await playlistDb.findOne({
             userID: msg.author?.id,
             name: args[0]
-        })
+        }) as any
         if(!playlist) return msg.channel.send("Could not find your playlist name!");
         let songTrack = msg.content.split(' ').slice(2).join(' ');
         if(!songTrack) return msg.channel.send("Input music name!");
+        if(playlist.music.length >= 50) return msg.channel.send("Maximum music in 1  playlist only 50!");
         const song = await this.client.musicManager.getSongs(songTrack)
         const dataToAdd = {
             $push: { music: song[0] }
