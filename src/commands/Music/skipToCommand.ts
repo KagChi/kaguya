@@ -10,7 +10,7 @@ import Command from "../../structures/Command";
     ownerOnly: false
 })
 export default class skipToCommand extends Command {
-    public async exec(msg: Message, args: as any) {
+    public async exec(msg: Message, args: any[]) {
     	const voiceChannel = msg.member?.voice.channel
         const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
@@ -27,7 +27,7 @@ export default class skipToCommand extends Command {
           return msg.reply(`The queue is only ${serverQueue.songs.length} songs long!`)
       serverQueue.playing = true;
         if (serverQueue.loop) {
-          for (let i = 0; i < args[0]- 2; i++) {
+          for (let i = 0; i < args[0]  - 2; i++) {
             serverQueue.songs.push(serverQueue.songs.shift());
           }
         } else {
