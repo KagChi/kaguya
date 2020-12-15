@@ -23,7 +23,7 @@ export default class deleteMusicCommand extends Command {
          if (!playlist.music) return msg.channel.send("There no music to remove");
          let newData = playlist.music.splice(args[1] as any - 1, 1);
          const embed = this.client.util.embed()
-         .setDescription(`<:remove_queue:745944600618860604> Removed **${newData[0].info.title}** from  \`${args[0]}\` playlist `)
+         .setDescription(`<:remove_queue:745944600618860604> Removed **${newData[0].title}** from  \`${args[0]}\` playlist `)
          .setThumbnail(newData[0].thumbnail)
          .setColor(this.client.util.color)
         msg.channel.send(embed);
