@@ -36,7 +36,7 @@ export default class viewCommand extends Command {
                 awaitReactions(this.client);
       function awaitReactions(client: any) {
         const filter = (rect: any, usr: User) => ["◀", "▶"].includes(rect.emoji.name) && usr.id === msg.author.id;
-        queueMess.createReactionCollector(filter, { time: 30000, max: 1 })
+        queueMess.createReactionCollector(filter, { max: 1 })
           .on("collect", col => {
             if (col.emoji.name === "◀") index--;
             if (col.emoji.name === "▶") index++;
