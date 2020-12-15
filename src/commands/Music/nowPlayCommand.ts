@@ -20,7 +20,7 @@ export default class nowPlayCommand extends Command {
         if(!serverQueue) return msg.channel.send(noQueue);
         const embed = this.client.util.embed()
         .setAuthor(serverQueue.songs[0].requester.tag, serverQueue.songs[0].requester.displayAvatarURL({ dynamic: true }))
-        .addField("Current Playing", serverQueue.song[0].title)
+        .addField("Current Playing", serverQueue.songs[0].title)
         .setImage(serverQueue.songs[0].thumbnail)
         msg.channel.send(embed)
     }
