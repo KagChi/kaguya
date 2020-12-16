@@ -4,11 +4,12 @@ export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public exec(oldState: VoiceState, newState: VoiceState): any {
         const serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
+        if(!serverQueue) return;
         console.log(newState?.member)
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
         const voiceChannelID = serverQueue?.voiceChannel?.id
-        if (oldState?.id === this.client.user?.id && oldID === serverQueue?.voiceChannel?.id) {
+        if (oldState?.id === this.client.user?.id) {
            this.client.musicManager.stop(serverQueue?.textChannel)
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
