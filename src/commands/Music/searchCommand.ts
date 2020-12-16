@@ -47,6 +47,7 @@ export default class searchCommand extends Command {
                 connection: null as any,
                 songs: [] as any[],
                 loop: false,
+                timeout: null,
                 additionalStreamTime: 0,
                 filters: [] as any,
                 volume: 100,
