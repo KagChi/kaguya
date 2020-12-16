@@ -3,7 +3,7 @@ import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public exec(oldState: VoiceState, newState: VoiceState): any {
-        const serverQueue = this.client.queue.get(newState?.guild?.id as Guild["id"]) as any
+        const serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
         console.log(newState?.member)
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
