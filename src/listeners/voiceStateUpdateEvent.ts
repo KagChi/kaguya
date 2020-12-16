@@ -1,12 +1,12 @@
-import type { Guild } from "discord.js-light";
+import type { Guild, VoiceChannel } from "discord.js-light";
 import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
-    public exec(oldState: any, newState: any): any {
+    public exec(oldState: VoiceChannel, newState: VoiceChannel): any {
         const serverQueue = this.client.queue.get(newState.guild?.id as Guild["id"]) as any
         console.log(oldState)
-        const oldID = oldState.channelID;
-        const newID = newState.channelID;
+        const oldID = (oldState as any).channel.id;
+        const newID = (newState as any).channelID;
         const voiceChannelID = serverQueue.voiceChannel?.id
         if (oldState.id === this.client.user?.id && oldID === serverQueue.voiceChannel?.id && newID === undefined) {
            serverQueue.stop(serverQueue.textChannel)
@@ -17,8 +17,8 @@ export default class voiceStateUpdateEvent extends Listener {
         }
         const voiceChannel = serverQueue.voiceChannel.members.filter((x: any) => !x.user.bot)
 
-        if (oldID === voiceChannelID && newID !== voiceChannelID && !newState.member?.user.bot && newState.guild.queue?.timeout === null) this.timeoutQueue(voiceChannel, newState);
-        if (newID === voiceChannelID && !newState.member?.user.bot) this.resume(voiceChannel, newState);
+        if (oldID === voiceChannelID && newID !== voiceChannelID && !(newState.members as any)?.user.bot && serverQueue?.timeout === null) this.timeoutQueue(voiceChannel, newState);
+        if (newID === voiceChannelID && !(newState as any).members?.user.bot) this.resume(voiceChannel, newState);
     }
 
     /**
