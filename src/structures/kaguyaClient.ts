@@ -8,7 +8,6 @@ import MusicManager from '../utils/musicManager'
 const { readdir } = require("fs").promises;
 import { join } from "path";
 import "../extenders";
-const Keyv = require("keyv")
 import musicManager from '../utils/musicManager';
 export default class KaguyaClient extends Client {
     public constructor(opt?: ClientOptions){
@@ -24,7 +23,6 @@ export default class KaguyaClient extends Client {
             ws: { properties: { $browser: "Discord iOS" } }
         })
     }
-    public keyv = new Keyv(process.env.keyv)
     public fun: Fun = new Fun()
     public musicManager: MusicManager = new MusicManager(this)
     public util: Utility = new Utility(this)
