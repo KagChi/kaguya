@@ -10,7 +10,7 @@ export default class voiceStateUpdateEvent extends Listener {
         const oldID = oldState?.channel?.id;
         const newID = newState?.channel?.id;
         const voiceChannelID = serverQueue.voiceChannel?.id
-        if (oldState.id === this.client.user?.id && oldID === serverQueue.voiceChannel?.id && newID === undefined) {
+        if (oldState?.id === this.client.user?.id && oldID === serverQueue.voiceChannel?.id && newID === undefined) {
            serverQueue.stop(serverQueue.textChannel)
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
@@ -20,7 +20,7 @@ export default class voiceStateUpdateEvent extends Listener {
         const voiceChannel = serverQueue.voiceChannel.members.filter((x: any) => !x.user.bot)
 
         if (oldID === voiceChannelID && newID !== voiceChannelID && !(newState.member as any)?.user.bot && serverQueue?.timeout === null) this.timeoutQueue(voiceChannel, newState);
-        if (newID === voiceChannelID && !(newState as any).members?.user.bot) this.resume(voiceChannel, newState);
+        if (newID === voiceChannelID && !newState?.member?.user.bot) this.resume(voiceChannel, newState);
     }
 
     /**
@@ -28,7 +28,7 @@ export default class voiceStateUpdateEvent extends Listener {
      */
     public timeoutQueue(voiceChannel: any, state: any): void {
         if(voiceChannel.size !== 0) return;
-        const serverQueue = this.client.queue.get(state.guild?.id as Guild["id"]) as any
+        const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
         const time = 15000
@@ -52,7 +52,7 @@ export default class voiceStateUpdateEvent extends Listener {
      * resume
      */
     public resume(voiceChanel: any, state: any): void {
-        const serverQueue = this.client.queue.get(state.guild?.id as Guild["id"]) as any
+        const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         if(voiceChanel?.size > 0){
             if(voiceChanel?.size === 1) {
                 clearTimeout(serverQueue.timeout)
