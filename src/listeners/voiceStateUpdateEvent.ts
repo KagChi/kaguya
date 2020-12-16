@@ -24,7 +24,7 @@ export default class voiceStateUpdateEvent extends Listener {
     /**
      * timeoutQueue
      */
-    public timeoutQueue(voiceChannel: any, state: any): void {
+    public timeoutQueue(voiceChannel: any, state: VoiceState): void {
         if(voiceChannel.size !== 0) return;
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         serverQueue.playing = false
@@ -49,7 +49,7 @@ export default class voiceStateUpdateEvent extends Listener {
     /**
      * resume
      */
-    public resume(voiceChanel: any, state: any): void {
+    public resume(voiceChanel: any, state: VoiceState): void {
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         if(voiceChanel?.size > 0){
             if(voiceChanel?.size === 1) {
