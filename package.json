@@ -1,19 +1,18 @@
 {
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
-    "@keyv/mongo": "^1.1.0",
     "axios": "^0.21.0",
     "discord-ytdl-core": "^5.0.0",
     "discord.js-light": "^3.4.2",
     "dotenv": "^8.2.0",
-    "dropbox": "^8.2.0",
     "ffmpeg-static": "^4.2.7",
-    "keyv": "^4.0.3",
     "mongoose": "^5.11.7",
     "youtube-sr": "^2.0.4",
     "ytdl-core": "^4.1.6",
     "ytdl-core-discord": "^1.2.4",
-    "ytpl": "^2.0.0-alpha.3"
+    "ytpl": "^2.0.0-alpha.3",
+    "form-data": "3.0.0",
+    "node-fetch": "2.6.1"
   },
   "devDependencies": {
     "@types/node": "^14.14.11",
