@@ -4,6 +4,7 @@ export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public exec(oldState: any, newState: any): any {
         const serverQueue = this.client.queue.get(newState.guild?.id as Guild["id"]) as any
+        console.log(oldState)
         const oldID = oldState.channelID;
         const newID = newState.channelID;
         const voiceChannelID = serverQueue.voiceChannel?.id
