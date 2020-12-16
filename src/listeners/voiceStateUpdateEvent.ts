@@ -16,7 +16,7 @@ export default class voiceStateUpdateEvent extends Listener {
            .setDescription("Deleted queue, because i was kicked from voicechannel!")
            serverQueue?.textChannel.send(embed)
         }
-        const voiceChannel = serverQueue?.voiceChannel.members.filter((x: any) => !x.user.bot)
+        const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
         if (oldID === voiceChannelID && newID !== voiceChannelID && !newState?.member?.user.bot && serverQueue?.timeout === null) this.timeoutQueue(voiceChannel, newState);
         if (newID === voiceChannelID && !newState?.member?.user.bot) this.resume(voiceChannel, newState);
