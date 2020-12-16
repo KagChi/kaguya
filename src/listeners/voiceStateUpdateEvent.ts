@@ -25,7 +25,7 @@ export default class voiceStateUpdateEvent extends Listener {
      * timeoutQueue
      */
     public timeoutQueue(voiceChannel: any, state: VoiceState): void {
-        if(voiceChannel.size !== 0) return;
+        if(voiceChannel?.size !== 0) return;
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
