@@ -4,18 +4,17 @@ export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public exec(oldState: VoiceState, newState: VoiceState): any {
         const serverQueue = this.client.queue.get(newState?.guild?.id as Guild["id"]) as any
-        if(!serverQueue) return;
-        console.log(newState)
+        console.log(newState.member)
         console.log(oldState)
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
-        const voiceChannelID = serverQueue.voiceChannel?.id
-        if (oldState?.id === this.client.user?.id && oldID === serverQueue.voiceChannel?.id && newID === undefined) {
-           serverQueue.stop(serverQueue.textChannel)
+        const voiceChannelID = serverQueue?.voiceChannel?.id
+        if (oldState?.id === this.client.user?.id && oldID === serverQueue?.voiceChannel?.id && newID === undefined) {
+           serverQueue?.stop(serverQueue?.textChannel)
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
            .setDescription("Deleted queue, because i was kicked from voicechannel!")
-           serverQueue.textChannel.send(embed)
+           serverQueue?.textChannel.send(embed)
         }
         const voiceChannel = serverQueue.voiceChannel.members.filter((x: any) => !x.user.bot)
 
@@ -45,7 +44,7 @@ export default class voiceStateUpdateEvent extends Listener {
         .setTitle("A User Have left the Voice Channel!")
         .setDescription("Paused Current Queue\nif in 20 seconds no user join queue will deleted!")
         .setColor(this.client.util.color)
-        serverQueue.textChannel.send(pauseEmbed)
+        serverQueue?.textChannel.send(pauseEmbed)
     }
 
     /**
