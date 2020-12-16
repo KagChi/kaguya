@@ -8,7 +8,7 @@ export default class voiceStateUpdateEvent extends Listener {
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
         const voiceChannelID = serverQueue?.voiceChannel?.id
-        if (oldState?.id === this.client.user?.id && oldID === serverQueue?.voiceChannel?.id && newID === undefined) {
+        if (newState?.id === this.client.user?.id && oldID === serverQueue?.voiceChannel?.id && newID === undefined) {
            this.client.musicManager.stop(serverQueue?.textChannel)
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
@@ -29,7 +29,6 @@ export default class voiceStateUpdateEvent extends Listener {
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
-        const time = 15000
         serverQueue.timeout = setTimeout(() => {
             const deleteEmbed = this.client.util.embed()
             .setColor(this.client.util.color)
@@ -37,7 +36,7 @@ export default class voiceStateUpdateEvent extends Listener {
             .setDescription("Deleted Queue because i was alone for 15 seconds")
             this.client.musicManager.stop(serverQueue.textChannel)
             serverQueue.textChannel.send(deleteEmbed)
-        }, time)
+        }, 15000)
 
         const pauseEmbed = this.client.util.embed()
         .setTitle("A User Have left the Voice Channel!")
