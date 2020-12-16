@@ -1,7 +1,7 @@
 import type { Guild, VoiceChannel, VoiceState } from "discord.js-light";
 import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
-    public name = "voiceStateUpdate";
+    public name = "voiceStateUpdatediabledfornow";
     public exec(oldState: VoiceState, newState: VoiceState): any {
         const serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
         if(!serverQueue) return;
