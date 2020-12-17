@@ -15,7 +15,7 @@ export default class voiceStateUpdateEvent extends Listener {
            .setColor(this.client.util.color)
            .setDescription("Deleted queue, because i was kicked from voicechannel!")
            serverQueue?.textChannel.send(embed)
-           serverQueue = null;
+           this.client.queue.delete(oldState?.guild?.id as Guild["id"])
         }
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
