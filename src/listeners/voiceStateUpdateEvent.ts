@@ -36,7 +36,9 @@ export default class voiceStateUpdateEvent extends Listener {
             .setColor(this.client.util.color)
             .setTitle("Deleted Queue!")
             .setDescription("Deleted Queue because i was alone for 15 seconds")
-            this.client.musicManager.stop(serverQueue.textChannel)
+            serverQueue.songs = [];
+            serverQueue.connection.dispatcher.end();
+            this.client.queue.delete(state?.guild?.id as Guild["id"])
             serverQueue.textChannel.send(deleteEmbed)
         }, 15000)
 
