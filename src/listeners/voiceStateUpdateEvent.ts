@@ -10,7 +10,7 @@ export default class voiceStateUpdateEvent extends Listener {
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
         const voiceChannelID = serverQueue?.voiceChannel?.id
-        if (oldState?.id === this.client.user?.id) {
+        if (oldState?.id === this.client.user?.id && newState === undefined) {
            this.client.musicManager.stop(serverQueue?.textChannel)
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
