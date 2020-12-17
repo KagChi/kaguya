@@ -20,25 +20,25 @@ export default class voiceStateUpdateEvent extends Listener {
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
         if (oldID === voiceChannelID && newID !== voiceChannelID && !newState?.member?.user.bot && serverQueue?.timeout === null || newState?.channel == null) this.timeoutQueue(voiceChannel, oldState);
-        if (newID === voiceChannelID && !newState?.member?.user.bot) this.resume(voiceChannel, oldState);
+        if (newID === voiceChannelID && !newState?.member?.user.bot) this.resume(voiceChannel, newState);
     }
 
     /**
      * timeoutQueue
      */
-    public timeoutQueue(voiceChannel: any, state: VoiceState): void {
+    public async timeoutQueue(voiceChannel: any, state: VoiceState): Promise<void> {
         if(voiceChannel?.size !== 0) return;
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
-        serverQueue.timeout = setTimeout(() => {
+        serverQueue.timeout = setTimeout(async () => {
             const deleteEmbed = this.client.util.embed()
             .setColor(this.client.util.color)
             .setTitle("Deleted Queue!")
             .setDescription("Deleted Queue because i was alone for 15 seconds")
             serverQueue.songs = [];
-            serverQueue.connection.dispatcher.end();
-            this.client.queue.delete(state?.guild?.id as Guild["id"])
+            await serverQueue.connection.dispatcher.end();
+            //this.client.queue.delete(state?.guild?.id as Guild["id"])
             serverQueue.textChannel.send(deleteEmbed)
         }, 15000)
 
