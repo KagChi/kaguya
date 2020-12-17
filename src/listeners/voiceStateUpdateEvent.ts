@@ -38,7 +38,8 @@ export default class voiceStateUpdateEvent extends Listener {
             .setTitle("Deleted Queue!")
             .setDescription("Deleted Queue because i was alone for 15 seconds")
             serverQueue.textChannel.send(deleteEmbed)
-            return this.client.musicManager.stop(serverQueue.textChannel);
+           await serverQueue.voiceChanel.leave()
+            return this.client.queue.delete(state?.guild?.id as Guild["id"])
         }, 15000)
 
         const pauseEmbed = this.client.util.embed()
