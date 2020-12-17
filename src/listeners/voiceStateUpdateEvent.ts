@@ -9,7 +9,7 @@ export default class voiceStateUpdateEvent extends Listener {
         console.log(oldState?.channel?.id)
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
-        const voiceChannelID = serverQueue?.voiceChannel?.id
+        const voiceChannelID = this.client.queue.get(newState?.guild?.id as Guild["id"])?.voiceChannel?.id
         if (oldState?.id === this.client.user?.id && newState === null) {
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
@@ -19,7 +19,7 @@ export default class voiceStateUpdateEvent extends Listener {
         }
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
-        if (oldID === voiceChannelID && newID !== voiceChannelID && !newState?.member?.user.bot && serverQueue?.timeout === null || newState?.channel == null) this.timeoutQueue(voiceChannel, oldState);
+        if (oldID === voiceChannelID && newID !== voiceChannelID && !newState?.member?.user.bot && serverQueue?.timeout === null) this.timeoutQueue(voiceChannel, oldState);
         if (newID === voiceChannelID && !newState?.member?.user.bot) this.resume(voiceChannel, newState);
     }
 
@@ -29,6 +29,7 @@ export default class voiceStateUpdateEvent extends Listener {
     public async timeoutQueue(voiceChannel: any, state: VoiceState): Promise<void> {
         if(voiceChannel?.size !== 0) return;
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
+        console.log(serverQueue)
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
         serverQueue.timeout = setTimeout(async () => {
@@ -36,10 +37,8 @@ export default class voiceStateUpdateEvent extends Listener {
             .setColor(this.client.util.color)
             .setTitle("Deleted Queue!")
             .setDescription("Deleted Queue because i was alone for 15 seconds")
-            serverQueue.songs = [];
-            await serverQueue.connection.dispatcher.end();
-            //this.client.queue.delete(state?.guild?.id as Guild["id"])
             serverQueue.textChannel.send(deleteEmbed)
+            return this.client.musicManager.stop(serverQueue.textChannel);
         }, 15000)
 
         const pauseEmbed = this.client.util.embed()
