@@ -11,12 +11,11 @@ export default class voiceStateUpdateEvent extends Listener {
         const newID = newState?.channelID;
         const voiceChannelID = serverQueue?.voiceChannel?.id
         if (oldState?.id === this.client.user?.id && newState === null) {
-            serverQueue.songs = [];
-           await serverQueue.connection.dispatcher.end();
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
            .setDescription("Deleted queue, because i was kicked from voicechannel!")
            serverQueue?.textChannel.send(embed)
+           return this.client.musicManager.stop(serverQueue?.textChannel);
         }
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
