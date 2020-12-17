@@ -3,7 +3,7 @@ import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public async exec(oldState: VoiceState, newState: VoiceState): Promise<any> {
-        const serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
+        let serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
         if(!serverQueue) return;
         console.log(newState?.channel?.id)
         console.log(oldState?.channel?.id)
@@ -15,7 +15,7 @@ export default class voiceStateUpdateEvent extends Listener {
            .setColor(this.client.util.color)
            .setDescription("Deleted queue, because i was kicked from voicechannel!")
            serverQueue?.textChannel.send(embed)
-           return this.client.musicManager.stop(serverQueue?.textChannel);
+           serverQueue = null;
         }
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
