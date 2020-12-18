@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import type { APIMessageContentResolvable, MessageAdditions, MessageOptions, SplitOptions, StringResolvable } from "discord.js-light";
+import type { APIMessageContentResolvable, MessageAdditions, MessageOptions, SplitOptions, StringResolvable } from "discord.js";
 import { APIMessage, Structures } from 'discord.js';
 
 // original code: https://gist.github.com/Allvaa/0320f06ee793dc88e4e209d3ea9f6256
