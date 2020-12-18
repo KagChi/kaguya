@@ -9,7 +9,6 @@ export default class voiceStateUpdateEvent extends Listener {
         console.log(oldState?.channel?.id)
         const oldID = oldState?.channelID;
         const newID = newState?.channelID;
-        const voiceChannelID = this.client.queue.get(newState?.guild?.id as Guild["id"])?.voiceChannel?.id
         if (oldState?.id === this.client.user?.id && newState === null) {
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
@@ -17,7 +16,7 @@ export default class voiceStateUpdateEvent extends Listener {
            serverQueue?.textChannel.send(embed)
            this.client.queue.delete(oldState?.guild?.id as Guild["id"])
         }
-        const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
+        const voiceChannel = serverQueue?.voiceChannel?.members
 
         if (oldID === this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && newID !== this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot && serverQueue?.timeout === null) return this.timeoutQueue(voiceChannel, oldState);
         if (newID === this.client.queue.get(newState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot) return this.resume(voiceChannel, newState);
