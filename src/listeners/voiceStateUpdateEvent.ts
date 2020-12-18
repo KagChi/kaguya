@@ -51,14 +51,14 @@ export default class voiceStateUpdateEvent extends Listener {
     /**
      * resume
      */
-    public resume(voiceChanel: any, state: VoiceState): void {
+    public resume(voiceChannel: any, state: VoiceState): void {
         const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
-        if(voiceChanel?.size > 0){
-            if(voiceChanel?.size === 1) {
+        if(voiceChannel?.size > 0){
+            if(voiceChannel?.size === 1) {
                 clearTimeout(serverQueue.timeout)
                 serverQueue.timeout = null
             }
-            if(!serverQueue.playing && voiceChanel.size < 2) {
+            if(!serverQueue.playing) {
                 const resumeEmbed = this.client.util.embed()
                 .setTitle("A User Joined Voice Channel!")
                 .setDescription("I've resumed current queue!")
