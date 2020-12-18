@@ -19,7 +19,7 @@ export default class voiceStateUpdateEvent extends Listener {
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
         if (oldID === this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && newID !== this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot && serverQueue?.timeout === null) return this.timeoutQueue(voiceChannel, oldState);
-        if (newID === this.client.queue.get(newState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot) return this.resume(voiceChannel, newState);
+        if (newID === this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot) return this.resume(voiceChannel, newState);
     }
 
     /**
