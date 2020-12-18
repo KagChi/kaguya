@@ -10,7 +10,7 @@ import Command from "../../structures/Command";
     ownerOnly: false
 })
 
-export default class PokeCommand extends Command {
+export default class NekoCommand extends Command {
     public async exec(msg: Message, args: string[]): Promise<void> {
         try {
         const image = await this.client.fun.neko()
