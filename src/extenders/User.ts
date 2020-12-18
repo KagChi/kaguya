@@ -1,4 +1,4 @@
-import { Structures } from "discord.js";
+import { Structures } from "discord.js-light";
 
 class User extends Structures.get("User") {
     public get isDev(): boolean {
@@ -6,7 +6,7 @@ class User extends Structures.get("User") {
     }
 }
 
-declare module "discord.js" {
+declare module 'discord.js' {
     export interface User {
         isDev: boolean;
     }

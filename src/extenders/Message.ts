@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
-import type { MessageOptions } from "discord.js";
-import { APIMessage, Structures } from "discord.js";
+import type { APIMessageContentResolvable, MessageAdditions, MessageOptions, SplitOptions, StringResolvable } from "discord.js-light";
+import { APIMessage, Structures } from 'discord.js';
 
 // original code: https://gist.github.com/Allvaa/0320f06ee793dc88e4e209d3ea9f6256
 
@@ -40,7 +40,7 @@ class Message extends Structures.get("Message") {
     }
 }
 
-declare module "discord.js" {
+declare module 'discord.js' {
     export interface MessageMentionOptions {
         repliedUser?: boolean;
     }
