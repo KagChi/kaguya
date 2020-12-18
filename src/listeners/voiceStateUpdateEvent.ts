@@ -38,11 +38,7 @@ export default class voiceStateUpdateEvent extends Listener {
             .setTitle("Deleted Queue!")
             .setDescription("Deleted Queue because i was alone for 15 seconds")
             serverQueue.textChannel.send(deleteEmbed)
-<<<<<<< HEAD
            await serverQueue.voiceChannel.leave()
-=======
-           await serverQueue.voiceChannel.leave()
->>>>>>> a1d09481f48bc83f3222faec3e4435a20756aa15
             return this.client.queue.delete(state?.guild?.id as Guild["id"])
         }, 15000)
 
