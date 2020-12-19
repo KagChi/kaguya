@@ -11,7 +11,7 @@ import Command from "../../structures/Command";
 })
 export default class nowPlayCommand extends Command {
     public async exec(msg: Message, args: string[]) {
-        const serverQueue = msg.guild?.queue
+        const serverQueue = msg.guild?.queue as any
         const noQueue = this.client.util.embed()
         .setTitle("Error!")
         .setDescription("There are no music playing")
