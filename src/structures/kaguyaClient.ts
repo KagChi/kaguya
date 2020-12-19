@@ -74,6 +74,8 @@ declare module 'discord.js' {
         voiceChannel: VoiceChannel,
         songs: string[],
         loop: boolean,
+        timeout: number | null,
+        additionalStreamTime: number,
         filters: string[],
         volume: number,
         playing: boolean
