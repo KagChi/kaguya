@@ -10,7 +10,7 @@
     "mongoose": "^5.11.7",
     "node-fetch": "2.6.1",
     "youtube-sr": "^2.0.4",
-    "ytdl-core": "^4.2.0",
+    "ytdl-core": "^4.2.1",
     "ytdl-core-discord": "^1.2.4",
     "ytpl": "^2.0.0-alpha.3"
   },
