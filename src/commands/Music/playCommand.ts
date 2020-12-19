@@ -19,7 +19,7 @@ export default class playCommand extends Command {
         if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
         if(!song) return msg.channel.send("Could not find any results");
-        const serverQueue = msg.guild!.queue as Iqueue
+        const serverQueue = msg.guild!.queue as any
         const queueConstruct = {
                 textChannel: msg.channel,
                 voiceChannel: msg.member?.voice.channel,
