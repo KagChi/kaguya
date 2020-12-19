@@ -1,4 +1,4 @@
-import type { Guild, Message } from "discord.js-light";
+import type { Guild, Message, Iqueue } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
@@ -19,7 +19,7 @@ export default class playCommand extends Command {
         if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
         if(!song) return msg.channel.send("Could not find any results");
-        const serverQueue = msg.guild!.queue as any
+        const serverQueue = msg.guild!.queue as Iqueue
         const queueConstruct = {
                 textChannel: msg.channel,
                 voiceChannel: msg.member?.voice.channel,
