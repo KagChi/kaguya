@@ -3,7 +3,7 @@ import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public async exec(oldState: VoiceState, newState: VoiceState): Promise<any> {
-        let serverQueue = newState?.guild?.queue | oldState?.guild?.queue
+        let serverQueue = newState?.guild?.queue as any | oldState?.guild?.queue as any
         if(!serverQueue) return;
         console.log(newState?.channel?.id)
         console.log(oldState?.channel?.id)
