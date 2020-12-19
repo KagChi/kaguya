@@ -14,12 +14,12 @@ export default class playCommand extends Command {
     public async exec(msg: Message, args: string[]) {
         const voiceChannel = msg.member?.voice.channel
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
-        if (this.client.queue.has(msg.guild?.id as Guild["id"]) && voiceChannel.id !== this.client.queue.get(msg.guild?.id as Guild["id"])?.voiceChannel.id)return msg.channel.send(`You must be in **${this.client.queue?.get(msg.guild?.id as Guild["id"])?.voiceChannel.name}** to play music`);
+        if (msg.guild?.queue && voiceChannel.id !== msg.guild?.queue?.voiceChannel.id) return msg.channel.send(`You must be in **${msg.guild?.queue?.voiceChannel.name}** to play music`);
         const query = args.join(" ")
         if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
         if(!song) return msg.channel.send("Could not find any results");
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         const queueConstruct = {
                 textChannel: msg.channel,
                 voiceChannel: msg.member?.voice.channel,
