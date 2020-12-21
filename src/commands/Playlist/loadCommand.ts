@@ -65,11 +65,11 @@ export default class loadCommand extends Command {
         }
         if(!serverQueue) {
             try {
-                     const connection = await msg.member?.voice.channel?.join()
-                     msg.guild?.me?.voice.setSelfDeaf(true)
-                     queueConstruct.connection = connection
-                     this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
-                     msg.guild!.queue = queueConstruct;
+                msg.guild!.queue = queueConstruct as any;
+                const connection = await msg.member?.voice.channel?.join()
+                await msg.guild?.me?.voice.setSelfDeaf(true)
+                queueConstruct.connection = connection
+                this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
                  } catch (e) {
                      msg.channel.send(`an error occured \`${e}\` `)
                      await msg.member?.voice.channel?.leave()
