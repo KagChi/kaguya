@@ -5,7 +5,7 @@ export default class MessageUpdateEvent extends Listener {
     public name = "messageUpdate";
     private readonly prefix = this.client.config.prefix;
     public async exec(oldMessage: Message, newMessage: Message): Promise<Message | void> {
-        if (oldMessage.content === newMessage.content) return undefined;
+        if (oldMessage.content === newMessage.content) return;
         if (!newMessage.guild) return;
         if (newMessage.author.bot) return;
         if (!newMessage.content.startsWith(this.prefix)) return;
