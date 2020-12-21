@@ -9,6 +9,7 @@ const { readdir } = require("fs").promises;
 import { join } from "path";
 import "../extenders";
 import musicManager from '../utils/musicManager';
+import NowplayMoeWS from '../utils/NowPlayMoeWS'
 export default class KaguyaClient extends Client {
     public constructor(opt?: ClientOptions){
         super({
@@ -29,6 +30,7 @@ export default class KaguyaClient extends Client {
     public config: typeof config = config
     public commands: Collection<string, Command> = new Collection()
     public cooldowns: Collection<string, number> = new Collection()
+    public nowplayMoe = NowplayMoeWS;
     public run(): void{
         void this.loadCommands();
         void this.loadEvent();
