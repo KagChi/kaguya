@@ -15,6 +15,7 @@ export default class musicManager {
   } 
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
+      if(song.http) return this.playHttp(song, msg);
         const serverQueue = msg.guild?.queue
         const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + serverQueue.additionalStreamTime : undefined!
         if(!song) {
@@ -164,8 +165,9 @@ export default class musicManager {
         console.error(error);
       }
 }
-    public async playMoe(song: any, msg: Message): Promise<void> {
+    public async playHttp(song: any, msg: Message): Promise<void> {
       const serverQueue = msg.guild?.queue
+
       if(!song) {
         await serverQueue.voiceChannel.leave();
         msg.guild!.queue = null
@@ -177,7 +179,6 @@ export default class musicManager {
       } 
       const dispatcher = serverQueue.connection
      .play(song.url, { 
-         type: 'opus',
          bitrate: 'auto'
          }).on("finish", () => {
           if (serverQueue.loop) {

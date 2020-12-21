@@ -20,6 +20,7 @@ export default class playMoeCommand extends Command {
         const song = region === "JP" ? this.client.nowplayMoe.jpop : this.client.nowplayMoe.kpop
         const queueConstruct = {
             textChannel: msg.channel,
+            http: true,
             voiceChannel: msg.member?.voice.channel,
             connection: null as any,
             songs: [] as any[],
@@ -36,7 +37,7 @@ export default class playMoeCommand extends Command {
              const songModel: any = {
                 id: null,
                 title: song.data?.title,
-                thumbnail: song.data?.albums,
+                thumbnail: song.data?.cover,
                 duration: 0,
                 durationFormatted: 0,
                 url: regionLink,
@@ -54,11 +55,12 @@ export default class playMoeCommand extends Command {
             }
             if(!serverQueue) {
                 try {
+                         console.log(queueConstruct.songs)
                          msg.guild!.queue = queueConstruct as any;
                          const connection = await msg.member?.voice.channel?.join()
                          msg.guild?.me?.voice.setSelfDeaf(true)
                          queueConstruct.connection = connection
-                         this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
+                         this.client.musicManager.playHttp(queueConstruct.songs[0] as any, msg)
                      } catch (e) {
                          msg.channel.send(`an error occured \`${e}\` `)
                          await msg.member?.voice.channel?.leave()
