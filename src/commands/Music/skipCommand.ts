@@ -25,7 +25,7 @@ export default class skipCommand extends Command {
         this.client.musicManager.skip(msg)
         const embed = this.client.util.embed()
         .setAuthor("Skipped current queue", msg.author?.avatarURL({ dynamic: true }) as any)
-        .setDescription(`⏭ skipped \`${song[0].title}\`.`)
+        .setDescription(`⏭ skipped \`${song.songs[0].title}\`.`)
         .setThumbnail(song[0].thumbnail)
         .setColor(this.client.util.color)
         msg.channel.send(embed)
