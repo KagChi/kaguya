@@ -19,7 +19,6 @@ export default class musicManager {
   } 
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
-      if(song.http) return this.playHttp(song, msg);
         const serverQueue = msg.guild?.queue
         const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + serverQueue.additionalStreamTime : undefined!
         if(!song) {
@@ -31,7 +30,8 @@ export default class musicManager {
             .setDescription("We've run out of songs! Better queue up some tunes.")
             return serverQueue.textChannel.send(embed)
           } 
-         
+    if(song.http) return this.playHttp(song, msg);
+     
     const encoderArgsFilters: any[] = []
     Object.keys(serverQueue.filters).forEach((filterName) => {
         if (serverQueue.filters[filterName]) {
