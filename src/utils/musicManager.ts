@@ -8,7 +8,10 @@ export default class musicManager {
     
     public async setFilters(msg: Message, newFilters: any): Promise<any> {
     const serverQueue = msg.guild?.queue
-    if(serverQueue.songs[0].http) return msg.channel.send("Cant `setFilters` on http music");
+    if(serverQueue.songs[0].http) {
+      await delay(6000)
+       return msg.channel.send("Error: Cant `setFilters` on http/live streaming music");
+    }
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
@@ -204,8 +207,86 @@ export default class musicManager {
   .setDescription(`▶ **Start Playing :**\n[${song.title}]\n [${song.requester}]`)
   .setImage(song.thumbnail)
   .setColor(this.client.util.color)
-  serverQueue.textChannel.send(embed)
+  const playingMessage = await serverQueue.textChannel.send(embed);
+        await playingMessage.react("⏭");
+        await playingMessage.react("⏸");
+        await playingMessage.react("▶");
+        await playingMessage.react("🔁");
+        await playingMessage.react("⏹");
+        
+        const filter = (reaction: any, user: User) => user.id === song.requester.id;
+        const collector = playingMessage.createReactionCollector(filter, {
+            time: song.duration > 0 ? song.duration : 50000
+          });
 
+          collector.on("collect", async (reaction: any, user: User) => {
+              if(!serverQueue) return;
+              try {
+              switch (reaction.emoji.name) {
+                case '⏭':
+                    this.skip(serverQueue.textChannel)
+                    const skipEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏩ skipped the song`)
+                    const skipMsg = await serverQueue.textChannel.send(skipEmbed)
+                    collector.stop();
+                    await delay(3500)
+                    skipMsg.delete()
+                    break;
+                case '⏸':
+                    if(!serverQueue.playing) return;
+                    const pauseEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏸ paused the music.`)
+                    const pauseMsg = await serverQueue.textChannel.send(pauseEmbed)
+                    this.pause(serverQueue.textChannel)
+                    await delay(3500)
+                    pauseMsg.delete()
+                    await reaction.users.remove(user)
+                    break;
+                case '▶':
+                    if(serverQueue.playing) return;
+                    const resumeEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ▶ resumed the music!`)
+                    const resumeMsg = await serverQueue.textChannel.send(resumeEmbed)
+                    this.resume(serverQueue.textChannel)
+                    await delay(3500)
+                    resumeMsg.delete()
+                    await reaction.users.remove(user)
+                    break;
+                case '🔁':
+                    serverQueue!.loop = !serverQueue?.loop;
+                    const loopEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`Turned Loop ${serverQueue.loop ? "**on** 🔄" : "**off** ❌"}`)
+                    const loopMsg = await serverQueue.textChannel.send(loopEmbed)
+                    await delay(3500)
+                    loopMsg.delete()
+                    await reaction.users.remove(user)
+                    break;
+                case '⏹':
+                    const stopEmbed = this.client.util.embed()
+                    .setColor(this.client.util.color)
+                    .setDescription(`${user} ⏹ stopped the music!`)
+                    const stopMessage = await serverQueue.textChannel.send(stopEmbed)
+                    this.stop(serverQueue.textChannel)
+                    collector.stop();
+                    await delay(3500)
+                    stopMessage.delete()
+                    break;
+
+                    default:
+                        break;
+              }
+            } catch (e) {
+                console.log(e.message)
+            }
+          })
+
+          collector.on("end", () => {
+            playingMessage.delete({ timeout: 2000 })
+          });
          
 
     }
