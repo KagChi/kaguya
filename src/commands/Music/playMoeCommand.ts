@@ -48,7 +48,7 @@ export default class playMoeCommand extends Command {
                 const embed = this.client.util.embed()
                 .setColor(this.client.util.color)
                 .setDescription(`☑ Added \`${song.data?.title}\` to queue\n[${msg.author}]`)
-                .setThumbnail(song.data?.albums)
+                .setThumbnail(song.data?.cover)
                serverQueue.textChannel.send(embed)
             } else {
                 queueConstruct.songs.push(songModel);
