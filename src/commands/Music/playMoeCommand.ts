@@ -37,7 +37,7 @@ export default class playMoeCommand extends Command {
                 id: null,
                 http: true,
                 title: song.data?.title,
-                thumbnail: {url: song.data?.cover},
+                thumbnail: song.data?.cover,
                 duration: 0,
                 durationFormatted: 0,
                 url: regionLink,

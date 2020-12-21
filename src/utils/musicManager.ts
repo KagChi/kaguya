@@ -202,6 +202,7 @@ export default class musicManager {
   dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
   const embed = this.client.util.embed()
   .setDescription(`▶ **Start Playing :**\n[${song.title}]\n [${song.requester}]`)
+  .setImage(song.thumbnail)
   .setColor(this.client.util.color)
   serverQueue.textChannel.send(embed)
 
