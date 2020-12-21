@@ -65,6 +65,7 @@ declare module 'discord.js' {
         musicManager: musicManager
         fun: Fun;
         util: Utility;
+        nowplayMoe: typeof NowplayMoeWS;
         cooldowns: Collection<string, number>;
         loadCommands(): Promise<void>;
         loadEventListeners(): Promise<void>;

@@ -1,4 +1,4 @@
-import type { Client, Guild, Message, User } from "discord.js-light";
+import type { Client, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
 import YoutubePL = require("ytpl");
@@ -164,7 +164,48 @@ export default class musicManager {
         console.error(error);
       }
 }
-    
+    public async playMoe(song: any, msg: Message): Promise<void> {
+      const serverQueue = msg.guild?.queue
+      if(!song) {
+        await serverQueue.voiceChannel.leave();
+        msg.guild!.queue = null
+        const embed = this.client.util.embed()
+        .setTitle("Ran Out Of Song")
+        .setColor(this.client.util.color)
+        .setDescription("We've run out of songs! Better queue up some tunes.")
+        return serverQueue.textChannel.send(embed)
+      } 
+      const dispatcher = serverQueue.connection
+     .play(song.url, { 
+         type: 'opus',
+         bitrate: 'auto'
+         }).on("finish", () => {
+          if (serverQueue.loop) {
+              // if loop is on, push the song back at the end of the queue
+              // so it can repeat endlessly
+              let lastSong = serverQueue.songs.shift();
+              serverQueue.songs.push(lastSong);
+              this.play(serverQueue.songs[0], msg);
+            } else {
+              // Recursively play the next song
+              serverQueue.songs.shift();
+              this.play(serverQueue.songs[0],msg);
+            }
+          
+        }).on("error", (err: string) => {
+          console.error(err);
+          serverQueue.songs.shift();
+          this.play(serverQueue.songs[0], msg);
+        });
+  dispatcher.setVolumeLogarithmic(serverQueue.volume / 100);
+  const embed = this.client.util.embed()
+  .setDescription(`▶ **Start Playing :**\n[${song.title}]\n [${song.requester}]`)
+  .setColor(this.client.util.color)
+  serverQueue.textChannel.send(embed)
+
+         
+
+    }
     public stop(msg: Message) {
         const serverQueue = msg.guild?.queue
         serverQueue.songs = [];
