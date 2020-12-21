@@ -3,7 +3,7 @@ import Listener from "../structures/Listener";
 export default class voiceStateUpdateEvent extends Listener {
     public name = "voiceStateUpdate";
     public async exec(oldState: VoiceState, newState: VoiceState): Promise<any> {
-        let serverQueue = this.client.queue.get(oldState?.guild?.id as Guild["id"]) as any
+        let serverQueue = oldState?.guild?.queue
        if(!serverQueue) return;
         console.log(newState?.channel?.id)
         console.log(oldState?.channel?.id)
@@ -12,14 +12,14 @@ export default class voiceStateUpdateEvent extends Listener {
         if (oldState?.id === this.client.user?.id && newState === null) {
            const embed = this.client.util.embed()
            .setColor(this.client.util.color)
-           .setDescription("Deleted queue, because i was kicked from voicechannel!")
+           .setDescription("Deleted queue, because i was kicked from voiceChannel!")
            serverQueue?.textChannel.send(embed)
            this.client.queue.delete(oldState?.guild?.id as Guild["id"])
         }
         const voiceChannel = serverQueue?.voiceChannel?.members.filter((x: any) => !x.user.bot)
 
-        if (oldID === this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && newID !== this.client.queue.get(oldState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot && serverQueue?.timeout === null) return this.timeoutQueue(voiceChannel, oldState);
-        if (newID === this.client.queue.get(newState?.guild?.id as Guild["id"])?.voiceChannel?.id && !newState?.member?.user.bot) return this.resume(voiceChannel, newState);
+        if (oldID === oldState?.guild?.queue?.voiceChannel?.id && newID !== oldState?.guild?.queue?.voiceChannel?.id && !newState?.member?.user.bot && serverQueue?.timeout === null) return this.timeoutQueue(voiceChannel, oldState);
+        if (newID === newState?.guild?.queue?.voiceChannel?.id && !newState?.member?.user.bot) return this.resume(voiceChannel, newState);
     }
 
     /**
@@ -27,7 +27,7 @@ export default class voiceStateUpdateEvent extends Listener {
      */
     public async timeoutQueue(voiceChannel: any, state: VoiceState): Promise<void> {
         if(voiceChannel?.size !== 0) return;
-        const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
+        const serverQueue = state.guild.queue as any
         console.log(serverQueue)
         serverQueue.playing = false
         serverQueue.connection.dispatcher.pause()
@@ -52,7 +52,7 @@ export default class voiceStateUpdateEvent extends Listener {
      * resume
      */
     public resume(voiceChannel: any, state: VoiceState): void {
-        const serverQueue = this.client.queue.get(state?.guild?.id as Guild["id"]) as any
+        const serverQueue = state?.guild?.queue as any
         if(voiceChannel?.size > 0){
             if(voiceChannel?.size === 1) {
                 clearTimeout(serverQueue.timeout)
