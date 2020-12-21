@@ -6,8 +6,9 @@ const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 export default class musicManager {
     constructor(public readonly client : Client){}
     
-    public async setFilters(msg: Message, newFilters: any): Promise<void> {
+    public async setFilters(msg: Message, newFilters: any): Promise<any> {
     const serverQueue = msg.guild?.queue
+    if(serverQueue.songs[0].http) return msg.channel.send("Cant `setFilters` on http music");
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
