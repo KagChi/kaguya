@@ -20,7 +20,6 @@ export default class playMoeCommand extends Command {
         const song = region === "JP" ? this.client.nowplayMoe.jpop : this.client.nowplayMoe.kpop
         const queueConstruct = {
             textChannel: msg.channel,
-            http: true,
             voiceChannel: msg.member?.voice.channel,
             connection: null as any,
             songs: [] as any[],
@@ -36,6 +35,7 @@ export default class playMoeCommand extends Command {
              })
              const songModel: any = {
                 id: null,
+                http: true,
                 title: song.data?.title,
                 thumbnail: song.data?.cover,
                 duration: 0,
