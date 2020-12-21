@@ -7,7 +7,7 @@ export default class musicManager {
     constructor(public readonly client : Client){}
     
     public async setFilters(msg: Message, newFilters: any): Promise<void> {
-    const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+    const serverQueue = msg.guild?.queue
        Object?.keys(newFilters).forEach((filterName) => {
                 serverQueue.filters[filterName] = newFilters[filterName]
             })
@@ -15,11 +15,11 @@ export default class musicManager {
   } 
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + serverQueue.additionalStreamTime : undefined!
         if(!song) {
             await serverQueue.voiceChannel.leave();
-            this.client.queue.delete(msg.guild?.id as Guild["id"]);
+            msg.guild!.queue = null
             const embed = this.client.util.embed()
             .setTitle("Ran Out Of Song")
             .setColor(this.client.util.color)
@@ -166,27 +166,27 @@ export default class musicManager {
 }
     
     public stop(msg: Message) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         serverQueue.songs = [];
         serverQueue.connection.dispatcher.end();
     }
 
     public setVolume(msg: Message, value: number) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         serverQueue.volume = value;
         serverQueue.connection.dispatcher.setVolume(value / 100);
     }
     public skip(msg: Message) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         serverQueue.connection.dispatcher.end();
     }
     public async pause(msg: Message) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        const serverQueue = msg.guild?.queue
         await serverQueue.connection.dispatcher.pause();
         serverQueue.playing = false
     }
     public async resume(msg: Message) {
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any 
+        const serverQueue = msg.guild?.queue
         await serverQueue.connection.dispatcher.resume();
         serverQueue.playing = true
     }

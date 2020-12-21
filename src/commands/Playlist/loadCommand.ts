@@ -14,8 +14,8 @@ export default class loadCommand extends Command {
     public async exec(msg: Message, args: string[]) {
         const voiceChannel = msg.member?.voice.channel
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
-        if (this.client.queue.has(msg.guild?.id as Guild["id"]) && voiceChannel.id !== this.client.queue.get(msg.guild?.id as Guild["id"])?.voiceChannel.id)return msg.channel.send(`You must be in **${this.client.queue?.get(msg.guild?.id as Guild["id"])?.voiceChannel.name}** to play music`);
+        const serverQueue = msg.guild?.queue
+        if (msg.guild?.queue && voiceChannel.id !== msg.guild?.queue?.voiceChannel.id)return msg.channel.send(`You must be in **${msg.guild.queue?.voiceChannel.name}** to play music`);
         if (!args[0]) return msg.reply('<:error:739430541094420512> | Enter Playlist name Please?');
         const playlist = await playlistDb.findOne({
             userID: msg.author?.id,
@@ -63,17 +63,17 @@ export default class loadCommand extends Command {
             queueConstruct.songs.push(x as any);
            })
         }
-        if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
         if(!serverQueue) {
             try {
                      const connection = await msg.member?.voice.channel?.join()
                      msg.guild?.me?.voice.setSelfDeaf(true)
                      queueConstruct.connection = connection
                      this.client.musicManager.play(queueConstruct.songs[0] as any, msg)
+                     msg.guild!.queue = queueConstruct;
                  } catch (e) {
                      msg.channel.send(`an error occured \`${e}\` `)
                      await msg.member?.voice.channel?.leave()
-                     this.client.queue.delete(msg.guild?.id as Guild["id"])
+                     msg.guild!.queue = null
                  }
               }
     }

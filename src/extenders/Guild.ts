@@ -1,4 +1,4 @@
-import { Structures, Iqueue } from 'discord.js-light'
+import { Structures } from 'discord.js-light'
 
 class Guild extends Structures.get("Guild") {
     public queue: any = null;
@@ -6,7 +6,7 @@ class Guild extends Structures.get("Guild") {
 
 declare module 'discord.js' {
     export interface Guild {
-        queue: Iqueue
+        queue: any
     }
 }
 Structures.extend("Guild", () => Guild);

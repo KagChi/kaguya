@@ -1,4 +1,4 @@
-import type { Guild, Message, Iqueue } from "discord.js-light";
+import type { Guild, Message } from "discord.js-light";
 import { CommandConf } from "../../decorators";
 import Command from "../../structures/Command";
 @CommandConf({ 
@@ -85,7 +85,6 @@ export default class playCommand extends Command {
         } else {
             queueConstruct.songs.push(songModel);
         }
-        if(!serverQueue) this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
         if(!serverQueue) {
          try {
                   msg.guild!.queue = queueConstruct as any;
@@ -96,7 +95,6 @@ export default class playCommand extends Command {
               } catch (e) {
                   msg.channel.send(`an error occured \`${e}\` `)
                   await msg.member?.voice.channel?.leave()
-                  this.client.queue.delete(msg.guild?.id as Guild["id"])
                   msg.guild!.queue = null as any;
               }
            }

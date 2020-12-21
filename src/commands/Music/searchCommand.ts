@@ -15,12 +15,12 @@ export default class searchCommand extends Command {
     public async exec(msg: Message, args: string[]) {
         const voiceChannel = msg.member?.voice.channel
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
-        if (this.client.queue.has(msg.guild?.id as Guild["id"]) && voiceChannel.id !== this.client.queue.get(msg.guild?.id as Guild["id"])?.voiceChannel.id)return msg.channel.send(`You must be in **${this.client.queue?.get(msg.guild?.id as Guild["id"])?.voiceChannel.name}** to search music`);
+        if (msg.guild?.queue && voiceChannel.id !== msg.guild.queue?.voiceChannel.id)return msg.channel.send(`You must be in **${msg.guild.queue?.voiceChannel.name}** to search music`);
         const query = args.join(" ")
         if(!query) return msg.channel.send("Enter music name!");
         const song = await this.client.musicManager.getSongs(query) as any
         if(!song) return msg.channel.send("Could not find any results");
-        const serverQueue = this.client.queue.get(msg.guild?.id as Guild["id"]) as any
+        const serverQueue = msg.guild?.queue
         function embed(client: any, msg: Message, song: any, type: any) {
             if (type === "search") {
               const embed = client.util.embed()
@@ -80,7 +80,7 @@ export default class searchCommand extends Command {
                 url: `https://www.youtube.com/watch?v=${song[choice.indexOf(col.emoji.name)].id}`,
                 requester: msg.author
             }
-            this.client.queue.set(msg.guild?.id as Guild["id"], queueConstruct as any);
+            msg.guild!.queue = queueConstruct
             queueConstruct.songs.push(songModel);
             const connection = await msg.member?.voice.channel?.join()
             msg.guild?.me?.voice.setSelfDeaf(true)
@@ -91,7 +91,7 @@ export default class searchCommand extends Command {
         } catch (e) {
             msg.channel.send(`an error occured \`${e}\` `)
             await msg.member?.voice.channel?.leave()
-            this.client.queue.delete(msg.guild?.id as Guild["id"])
+            msg.guild!.queue = null;
         }
     }
        }).on("end", c => m.delete());
