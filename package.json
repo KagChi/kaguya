@@ -11,7 +11,7 @@
     "node-fetch": "2.6.1",
     "youtube-sr": "^2.0.4",
     "ytdl-core": "^4.2.1",
-    "ytpl": "^2.0.3"
+    "ytpl": "^2.0.4"
   },
   "devDependencies": {
     "@types/node": "^14.14.11",
