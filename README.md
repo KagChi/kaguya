@@ -28,6 +28,10 @@ A music bot with custom playlist support, download music, music filters
 > Running The Code
 - npm start / yarn start
 
+## Requirements
+1. A brain (ofc)
+2. Bot Token 
+3. Mongodb url
 
 ## Disclaimer
 >  Keep it free!
