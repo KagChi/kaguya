@@ -32,7 +32,7 @@ A music bot with custom playlist support, download music, music filters
 1. A brain (ofc)
 2. Bot Token 
 3. Mongodb url
-
+4. Node.js v14.x
 ## Disclaimer
 >  Keep it free!
 
