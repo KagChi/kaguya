@@ -18,14 +18,15 @@ A music bot with custom playlist support, download music, music filters
 ![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981912614502430/Screenshot_2021-01-05-18-47-52-87_572064f74bd5f9fa804b05334aa4f912.jpg)
 
 ## About Self Hosting
+> Configuration
+- fill `config.ts` file *some config require `.env`
 
-Just fill config.ts
+> Building The Code
+- npm install / yarn install
+- npm run build / yarn build
 
-run yarn install
-
-run yarn build
-
-run yarn start
+> Running The Code
+- npm start / yarn start
 
 
 ## Disclaimer
