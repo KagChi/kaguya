@@ -3,6 +3,7 @@ WIP, Kaguya Sama coming soon
 
 ## Status
 ![Github Workflow](https://img.shields.io/github/workflow/status/KagChi/kaguya/Node.js%20CI)
+![Bot Version](https://img.shields.io/github/package-json/v/KagChi/Kaguya)
 ## Rich Music Bot
 A music bot with custom playlist support, download music, music filters
 
