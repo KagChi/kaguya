@@ -1,4 +1,4 @@
-<a href="https://github.com/kaguya"> <img src="https://cdn.discordapp.com/avatars/707045201461641236/83e9367c59338c7384a5af9d9fae692d.jpg?size=2048"/></a>
+<a href="https://github.com/kaguya"> <img src="https://cdn.discordapp.com/avatars/707045201461641236/83e9367c59338c7384a5af9d9fae692d.jpg?size=1024"/></a>
 # kaguya
 > WIP, Kaguya Sama coming soon
 
