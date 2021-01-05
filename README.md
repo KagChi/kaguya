@@ -17,7 +17,7 @@ A music bot with custom playlist support, download music, music filters
 > Commands
 ![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981912614502430/Screenshot_2021-01-05-18-47-52-87_572064f74bd5f9fa804b05334aa4f912.jpg)
 
-## About Self Hosting
+## Self Hosting
 > Configuration
 - fill `config.ts` file *some config require `.env`
 
@@ -33,3 +33,8 @@ A music bot with custom playlist support, download music, music filters
 >  Keep it free!
 
 please don't sell the code under any circumstances, the code will always free.
+
+> Hey, it's secret!
+
+This project contains code from closed source
+[NezukoChan](https://top.gg/bot/616169470293049344)
