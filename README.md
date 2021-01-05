@@ -20,4 +20,6 @@ run yarn start
 
 
 ## Disclaimer
-Please Do not sell the code.
+>  Keep it free!
+
+please don't sell the code under any circumstances, the code will always free.
