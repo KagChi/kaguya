@@ -10,7 +10,7 @@
 A music bot with custom playlist support, download music, music filters
 
 ## Commands
-> 
+> Featured
 ![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981253030576159/Screenshot_2021-01-05-18-45-15-99_572064f74bd5f9fa804b05334aa4f912.jpg)
 > 
 ![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981608502296587/Screenshot_2021-01-05-18-46-40-75_572064f74bd5f9fa804b05334aa4f912.jpg)
