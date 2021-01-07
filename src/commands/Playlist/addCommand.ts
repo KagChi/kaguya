@@ -25,11 +25,10 @@ export default class addCommand extends Command {
         let songTrack = msg.content.split(' ').slice(2).join(' ');
         if(!songTrack) return msg.channel.send("Input music name!");
         if(playlist.music.length >= 50) return msg.channel.send("Maximum music in 1  playlist only 50!");
-        const song = await this.client.musicManager.getSongs(songTrack)
-        const dataToAdd = {
+        const song = await this.client.musicManager.getSongs(songTrack) 
+          await playlist.updateOne({
             $push: { music: song[0] }
-          }
-          await playlist.updateOne(dataToAdd);
+          });
           msg.channel.send(`<a:yes:739409625090228275> Successfully Added **${song[0].title}** To ${args[0]} Playlist!`);
 
          
