@@ -1,7 +1,6 @@
 import type { Client, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
-import YoutubePL = require("ytpl");
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 export default class musicManager {
     constructor(public readonly client : Client){}
@@ -318,8 +317,8 @@ export default class musicManager {
     public async getSongs(query: string): Promise<any> {
       const playlistReg = /^https?:\/\/(www.youtube.com|youtube.com|youtu.be)\/playlist(.*)$/
       if(playlistReg.test(query)) {
-        const search = await YoutubePL(query)
-        const data = search.items as any
+        const search = await YouTube.getPlaylist(query)
+        const data = search.videos as any
         const finalData = [] as any
         for(let i = 0; i < data.length; i++){
           finalData.push({
