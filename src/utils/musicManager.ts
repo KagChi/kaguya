@@ -326,9 +326,9 @@ export default class musicManager {
             playlistTitle: search.title,
             id: data[i].id,
             title: data[i].title,
-            durationFormatted: data[i].duration,
-            duration: 0,
-            thumbnail: data[i].bestThumbnail
+            durationFormatted: data[i].durationFormatted,
+            duration: data[i].duration,
+            thumbnail: data[i].thumbnail.url
           })
         }
         return finalData;
