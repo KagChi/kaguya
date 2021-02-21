@@ -8,7 +8,7 @@
     "express": "4.17.1",
     "ffmpeg-static": "^4.2.7",
     "form-data": "3.0.0",
-    "mongoose": "^5.11.15",
+    "mongoose": "^5.11.17",
     "node-fetch": "2.6.1",
     "youtube-sr": "^3.0.5",
     "ytdl-core": "^4.4.5"
