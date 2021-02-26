@@ -11,7 +11,7 @@
     "mongoose": "^5.11.17",
     "node-fetch": "2.6.1",
     "youtube-sr": "^3.0.5",
-    "ytdl-core": "^4.4.5"
+    "ytdl-core": "^4.5.0"
   },
   "devDependencies": {
     "@types/node": "^14.14.30",
