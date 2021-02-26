@@ -10,7 +10,7 @@
     "form-data": "4.0.0",
     "mongoose": "^5.11.17",
     "node-fetch": "2.6.1",
-    "youtube-sr": "^3.0.5",
+    "youtube-sr": "^4.0.2",
     "ytdl-core": "^4.5.0"
   },
   "devDependencies": {
