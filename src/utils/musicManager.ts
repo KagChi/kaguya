@@ -1,6 +1,8 @@
 import type { Client, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
+import proxyClass from './Proxy';
+const Proxy = new proxyClass()
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 export default class musicManager {
     constructor(public readonly client : Client){}
@@ -18,6 +20,7 @@ export default class musicManager {
   } 
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
+      const proxy = await Proxy.generate()
         const serverQueue = msg.guild?.queue
         const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + serverQueue.additionalStreamTime : undefined!
         if(!song) {
@@ -47,6 +50,14 @@ export default class musicManager {
        serverQueue.additionalStreamTime = seekTime
       }
    const stream = await ytdl(song.url,{
+              requestOptions: (parsed: any) => {
+                return {
+                  host: proxy.split('//')[1].split(':')[0],
+                  port: proxy.split('//')[1].split(':')[1],
+                  path: '/' + parsed.href,
+                  headers: { Host: parsed.host },
+                }
+              },
               filter: 'audioonly',
               quality: "highestaudio",
               encoderArgs: encoderArgs,
@@ -170,7 +181,7 @@ export default class musicManager {
 }
     public async playHttp(song: any, msg: Message): Promise<void> {
       const serverQueue = msg.guild?.queue
-
+      const proxy = await Proxy.generate()
       if(!song) {
         await serverQueue.voiceChannel.leave();
         msg.guild!.queue = null
@@ -181,7 +192,15 @@ export default class musicManager {
         return serverQueue.textChannel.send(embed)
       } 
       const dispatcher = serverQueue.connection
-     .play(song.url, { 
+     .play(song.url,{
+      requestOptions: (parsed: any) => {
+        return {
+          host: proxy.split('//')[1].split(':')[0],
+          port: proxy.split('//')[1].split(':')[1],
+          path: '/' + parsed.href,
+          headers: { Host: parsed.host },
+        }
+      }, 
          bitrate: 'auto'
          }).on("finish", () => {
           if (serverQueue.loop) {
