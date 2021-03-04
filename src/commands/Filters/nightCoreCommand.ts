@@ -14,7 +14,8 @@ export default class nightCoreCommand extends Command {
     public async exec(msg: Message, args: string[]) {
         const voiceChannel = msg.member?.voice.channel
         if (!voiceChannel) return msg.channel.send("You must join voiceChannel first");
-        if (msg.guild?.queue && voiceChannel.id !== msg.guild.queue?.voiceChannel.id)return msg.channel.send(`You must be in **${msg.guild.queue?.voiceChannel.name}** to set music filter`);
+        if (msg.guild?.queue && voiceChannel.id !== msg.guild.queue?.voiceChannel.id)
+        return msg.channel.send(`You must be in **${msg.guild.queue?.voiceChannel.name}** to set music filter`);
         const serverQueue = msg.guild?.queue
         const noQueue = this.client.util.embed()
         .setTitle("Error!")
