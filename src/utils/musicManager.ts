@@ -1,10 +1,6 @@
 import type { Client, Message, User } from "discord.js-light";
 import ytdl from "discord-ytdl-core";
 import YouTube from "youtube-sr";
-import proxyClass from './Proxy';
-const Proxy = new proxyClass()
-import HttpsProxyAgent from 'http-proxy-agent';
-
 const delay = (ms: number) => new Promise(res => setTimeout(res, ms));
 export default class musicManager {
     constructor(public readonly client : Client){}
@@ -54,7 +50,7 @@ export default class musicManager {
        serverQueue.additionalStreamTime = seekTime
       }
    const stream = await ytdl(song.url,{
-              requestOptions: { agent },
+              
               filter: 'audioonly',
               quality: "highestaudio",
               encoderArgs: encoderArgs,
@@ -178,7 +174,7 @@ export default class musicManager {
 }
     public async playHttp(song: any, msg: Message): Promise<void> {
       const serverQueue = msg.guild?.queue
-      const proxy = await Proxy.generate()
+      
       if(!song) {
         await serverQueue.voiceChannel.leave();
         msg.guild!.queue = null
@@ -189,15 +185,7 @@ export default class musicManager {
         return serverQueue.textChannel.send(embed)
       } 
       const dispatcher = serverQueue.connection
-     .play(song.url,{
-      requestOptions: (parsed: any) => {
-        return {
-          host: proxy.split('//')[1].split(':')[0],
-          port: proxy.split('//')[1].split(':')[1],
-          path: '/' + parsed.href,
-          headers: { Host: parsed.host },
-        }
-      }, 
+     .play(song.url,{ 
          bitrate: 'auto'
          }).on("finish", () => {
           if (serverQueue.loop) {
