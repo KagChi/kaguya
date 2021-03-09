@@ -18,9 +18,6 @@ export default class musicManager {
   } 
     
     public async play(song: any, msg: Message, updateFilters?: boolean): Promise<void> {
-      const proxy = await Proxy.generate()
-      const agent = HttpsProxyAgent(proxy);
-
         const serverQueue = msg.guild?.queue
         const seekTime = updateFilters ? serverQueue.connection.dispatcher.streamTime + serverQueue.additionalStreamTime : undefined!
         if(!song) {
