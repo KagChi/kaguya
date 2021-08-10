@@ -10,11 +10,9 @@
         "allowSyntheticDefaultImports": true,
         "esModuleInterop": true,
         "resolveJsonModule": true,
-        "typeRoots": [
-            "node_modules/@types",
-            "src/typings"
-        ],
-        "rootDir": "src",
+        "typeRoots": ["node_modules/@types"],
         "outDir": "dist"
-    }
+    },
+    "exclude": [],
+    "include": ["src/**/*"]
 }
