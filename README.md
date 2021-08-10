@@ -43,14 +43,8 @@ A music bot with custom playlist support, download music, music filters
 ## Requirements
 1. A brain (ofc)
 2. Bot Token 
-3. Mongodb url
-4. Node.js v14.x
+4. Node.js v12.x
 ## Disclaimer
 >  Keep it free!
 
 please don't sell the code under any circumstances, the code will always free.
-
-> Hey, it's secret!
-
-This project contains code from closed source
-[NezukoChan](https://top.gg/bot/616169470293049344)
