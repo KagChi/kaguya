@@ -7,7 +7,6 @@ import {
     VoiceConnection,
     VoiceConnectionDisconnectReason,
     VoiceConnectionStatus,
-    StreamType,
     createAudioResource,
     demuxProbe
 } from '@discordjs/voice';
@@ -54,9 +53,9 @@ export class musicSubscriptions {
 
    
 
-    public async createStream(track: tracks): Promise<AudioResource<tracks> | undefined> {
+    public async createStream(track: tracks): Promise<AudioResource<tracks>> {
         switch (track.sourceName) {
-            case 'youtube': {
+            default:
                 return new Promise((resolve, reject) => {
                     const process = ytdl(
                         track.uri,
@@ -86,7 +85,7 @@ export class musicSubscriptions {
                         })
                         .catch(onError);
                 });
-            }
+                break;
         }
     }
 
@@ -94,7 +93,7 @@ export class musicSubscriptions {
     public async play(track: tracks) {
         const stream = await this.createStream(track);
         this._applyPlayerEvents(this.audioPlayer);
-        this.audioPlayer.play(stream as AudioResource<tracks>)
+        this.audioPlayer.play(stream)
     }
 
     public _applyPlayerEvents(player: AudioPlayer) {
