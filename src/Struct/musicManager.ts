@@ -1,6 +1,6 @@
 import KaguyaClient from "../Client";
 import trackResolver, { trackResult } from 'track-resolver';
-import { Collection, Snowflake, VoiceChannel, StageChannel } from "discord.js";
+import { Collection, Snowflake, VoiceChannel, StageChannel, GuildMember } from "discord.js";
 import kaguyaPlayer from "./playerHandler";
 export default class musicManager {
     constructor(public client: KaguyaClient) { }
@@ -16,7 +16,15 @@ export default class musicManager {
         this.players.set(channel.guildId, createPlayer);
         return createPlayer;
     }
-    public async load(query: string): Promise<trackResult>  {
-        return this.resolver.load(query)
+
+    public async getSongs(query: string, requester?: GuildMember)  {
+        const tracks = await this.resolver.load(query)
+        tracks.tracks.map(x => x.requester = requester)
+        return tracks
+    }
+}
+declare module 'track-resolver' {
+    export interface tracks {
+        requester: GuildMember | undefined
     }
 }
