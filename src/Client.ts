@@ -2,15 +2,17 @@ import { AkairoClient, CommandHandler, ListenerHandler } from 'discord-akairo';
 import { Intents } from 'discord.js';
 import { join } from 'path';
 import musicManager from './Struct/musicManager';
-import { CreateEmbed } from './Util/CreateEmbed';
 export default class KaguyaClient extends AkairoClient {
     constructor() {
         super({}, {
             intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_VOICE_STATES ] ,
             partials: ['MESSAGE', 'CHANNEL', 'USER']
         })
+        this.listenerHandler.setEmitters({
+            player: this.music
+        })
     }
-    public music = new musicManager(this);
+    public music = new musicManager(this)
     public commandLoader = new CommandHandler(this, {
         prefix: process.env.PREFIX,
         directory: join(__dirname, 'Commands'),
@@ -26,12 +28,14 @@ export default class KaguyaClient extends AkairoClient {
             },
         }
     })
-    public listenerHandle = new ListenerHandler(this, {
+    public listenerHandler = new ListenerHandler(this, {
         directory: join(__dirname, 'Listeners')
     })
+
     init() {
         this.commandLoader.loadAll()
-        this.listenerHandle.loadAll()
+        this.listenerHandler.loadAll()
+        
         this.login()
     }
 } 
