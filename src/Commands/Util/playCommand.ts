@@ -20,7 +20,7 @@ export default class PlayCommand extends Command {
     }
     async exec(msg: Message, { musicName } : { musicName: string}) {
         const tracks = await this.client.music.getSongs(musicName, msg.member as GuildMember);
-        const player = this.client.music.create(msg.member?.voice.channel as StageChannel | VoiceChannel);
+        const player = this.client.music.create(msg.member?.voice.channel as StageChannel | VoiceChannel, msg.channel);
         player?.connect();
         player?.play(tracks.tracks[0])
     }

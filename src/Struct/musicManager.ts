@@ -1,18 +1,21 @@
 import KaguyaClient from "../Client";
 import trackResolver, { trackResult } from 'track-resolver';
-import { Collection, Snowflake, VoiceChannel, StageChannel, GuildMember } from "discord.js";
+import { Collection, Snowflake, VoiceChannel, StageChannel, GuildMember, TextBasedChannels } from "discord.js";
 import kaguyaPlayer from "./playerHandler";
-export default class musicManager {
-    constructor(public client: KaguyaClient) { }
+import EventEmitter from "events";
+export default class musicManager extends EventEmitter {
+    constructor(public client: KaguyaClient) {
+        super()
+    }
     public resolver = new trackResolver({
         loadFullPlaylist: true,
         resolveSpotify: true
     })
     public players: Collection<Snowflake, kaguyaPlayer> = new Collection();
 
-    public create(channel: StageChannel | VoiceChannel) {
+    public create(channel: StageChannel | VoiceChannel, textChannel: TextBasedChannels) {
         if (this.players.has(channel.guildId)) return this.players.get(channel.guildId);
-        const createPlayer = new kaguyaPlayer(channel, this.client);
+        const createPlayer = new kaguyaPlayer(channel, textChannel, this.client);
         this.players.set(channel.guildId, createPlayer);
         return createPlayer;
     }

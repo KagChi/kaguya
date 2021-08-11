@@ -1,11 +1,11 @@
 import { joinVoiceChannel } from "@discordjs/voice";
-import { VoiceChannel, StageChannel } from "discord.js";
+import { VoiceChannel, StageChannel, TextBasedChannels } from "discord.js";
 import { tracks } from "track-resolver";
 import KaguyaClient from "../Client";
 import { musicSubscriptions } from "./musicSubscriptions";
 
 export default class kaguyaPlayer {
-    constructor(public channel: StageChannel | VoiceChannel, public client: KaguyaClient) { }
+    constructor(public channel: StageChannel | VoiceChannel, public textChannel: TextBasedChannels, public client: KaguyaClient) { }
     public subscription: musicSubscriptions | undefined;
     public connect() {
         const voiceConnection = joinVoiceChannel({
