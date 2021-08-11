@@ -12,7 +12,6 @@ export default class trackStart extends Listener {
     }
 
     async exec(player: kaguyaPlayer, track: tracks) {
-        console.log(track)
         player.textChannel.send({ embeds: [CreateEmbed('info', `▶ | Start playing ${track.title}`)]})
     }
 }
