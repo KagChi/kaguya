@@ -12,6 +12,13 @@ export default class trackEnd extends Listener {
     }
 
     async exec(player: kaguyaPlayer, track: tracks) {
-        player.textChannel.send({ embeds: [CreateEmbed('info', `▶ | Music finished. ${track.title}`)] })
+        const message = await player.textChannel.send({ embeds: [CreateEmbed('info', `▶ | Music finished. ${track.title}`)] })
+        if (!player.queue.length) {
+            if (message.deleted || !message.deletable) return;
+            await message.delete();
+            return player.client.music.emit('queueEnd', player, track);
+        }
+        player.queue.current = player.queue.shift();
+        return player.play();
     }
 }

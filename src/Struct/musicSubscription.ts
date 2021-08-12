@@ -9,48 +9,57 @@ import {
     VoiceConnectionStatus,
     createAudioResource,
     demuxProbe,
-    StreamType
+    StreamType,
+    PlayerSubscription
 } from '@discordjs/voice';
 import { raw as ytdl } from 'youtube-dl-exec';
 import { tracks } from 'track-resolver';
 import kaguyaPlayer from './playerHandler';
 import { FFmpeg } from 'prism-media';
 
-export class musicSubscriptions {
+export class musicSubscription {
     public readonly voiceConnection: VoiceConnection;
-    public readonly audioPlayer: AudioPlayer;
+    public audioPlayer: AudioPlayer | undefined;
     public _filters = [];
     public _currentTrack: tracks | undefined;
     public initial = false;
+    private readyLock = false;
+    private _currentResource: AudioResource | null = null;
+    private subscription: PlayerSubscription | undefined;
     public constructor(voiceConnection: VoiceConnection, public player: kaguyaPlayer) {
         this.voiceConnection = voiceConnection;
-        this.audioPlayer = createAudioPlayer();
-        this.voiceConnection.on("stateChange", async (oldState, newState) => {
+        this.voiceConnection.on("stateChange", async (_, newState) => {
             if (newState.status === VoiceConnectionStatus.Disconnected) {
                 if (newState.reason === VoiceConnectionDisconnectReason.WebSocketClose && newState.closeCode === 4014) {
                     try {
-                        await entersState(this.voiceConnection, VoiceConnectionStatus.Connecting, 5000);
+                        await entersState(this.voiceConnection, VoiceConnectionStatus.Connecting,  5000);
                     } catch {
-                        this.player.client.music.emit('WebSocketClosedEvent', (this.player, newState.closeCode))
-                        this.destroy();
+                        this.voiceConnection.destroy();
                     }
+                } else if (this.voiceConnection.rejoinAttempts < 5) {
+                    await musicSubscription.wait((this.voiceConnection.rejoinAttempts + 1) * 5000);
+                    this.voiceConnection.rejoin();
                 } else {
-                    if (newState.reason === VoiceConnectionDisconnectReason.WebSocketClose) this.player.client.music.emit('WebSocketClosedEvent', (this.player, newState.closeCode))
-                    this.stop();
+                    this.voiceConnection.destroy();
                 }
             } else if (newState.status === VoiceConnectionStatus.Destroyed) {
                 this.stop();
-            } else if (newState.status === VoiceConnectionStatus.Connecting || newState.status === VoiceConnectionStatus.Signalling) {
+            } else if (!this.readyLock && (newState.status === VoiceConnectionStatus.Connecting || newState.status === VoiceConnectionStatus.Signalling)) {
+                this.readyLock = true;
                 try {
-                    await entersState(this.voiceConnection, VoiceConnectionStatus.Ready, 20000);
+                    await entersState(this.voiceConnection, VoiceConnectionStatus.Ready, 5000);
                 } catch {
-                    if (this.voiceConnection.state.status !== VoiceConnectionStatus.Destroyed) this.destroy();
+                    if (this.voiceConnection.state.status !== VoiceConnectionStatus.Destroyed) this.voiceConnection.destroy();
+                } finally {
+                    this.readyLock = false;
                 }
             }
-        })
+        });
     }
 
-   
+    static wait(time: number) {
+        return new Promise((r) => setTimeout(r, time).unref());
+    }
 
     public async createStream(track: tracks): Promise<AudioResource<tracks>> {
         switch (track.sourceName) {
@@ -113,12 +122,19 @@ export class musicSubscriptions {
 
     public async play(track: tracks) {
         const stream = await this.createStream(track);
-        this._applyPlayerEvents(this.audioPlayer);
-        this.audioPlayer.play(stream);
+        this._currentResource = stream
+        const newPlayer = createAudioPlayer();
+        this._applyPlayerEvents(newPlayer);
+        newPlayer.play(stream);
         this.initial = true;
     }
 
     public _applyPlayerEvents(player: AudioPlayer) {
+        const old = this.audioPlayer;
+        if (old) {
+            const stateChangeListeners = old.listeners("stateChange"); // all player listeners internally in djs voice should be added already unless something weird happens where they're added on another tick
+            old.removeListener("stateChange", stateChangeListeners[0]); // no listeners should be added in the constructor. This method is called in the next tick
+        }
         player.on("stateChange", async (oldState, newState) => {
             if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
@@ -126,15 +142,40 @@ export class musicSubscriptions {
                 if (this._currentTrack) this.player.client.music.emit('trackEnd', this.player, this._currentTrack)
             } else if (newState.status === AudioPlayerStatus.Playing) {
 				// If the Playing state has been entered, then a new track has started playback.
-                if (this.initial && this._currentTrack) this.player.client.music.emit('trackStart', this.player, this._currentTrack)
-                this.initial = false
+                this.audioPlayer = player;
+                this.subscription?.unsubscribe();
+                old?.stop(true);
+                old?.removeAllListeners();
+                this.subscription = this.voiceConnection.subscribe(this.audioPlayer);
+                if (this.initial && this._currentTrack) {
+                    this.player.client.music.emit('trackStart', this.player, this._currentTrack)
+                    this._currentResource = null;
+                    this.initial = false
+                } 
             }
-            this.voiceConnection.subscribe(this.audioPlayer);
+           
         })
     }
 
-    public stop(destroyed?: boolean) {
-        this.audioPlayer.stop(true);
+    public stop(force?: boolean) {
+        this.audioPlayer?.stop(force);
+    }
+
+    get volume() {
+        if (!this._currentResource || !this._currentResource.volume) return 100;
+        const currentVol = this._currentResource.volume.volume;
+        return Math.round(Math.pow(currentVol, 1 / 1.660964) * 100);
+    }
+
+    setVolume(value: number) {
+        if (!this._currentResource || isNaN(value) || value < 0 || value > Infinity) return false;
+        this._currentResource.volume?.setVolumeLogarithmic(value / 100);
+        return true;
+    }
+
+    get streamTime() {
+        if (!this._currentResource) return 0;
+        return this._currentResource?.playbackDuration;
     }
 
     public destroy() {
