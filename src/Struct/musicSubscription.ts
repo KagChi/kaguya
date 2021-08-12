@@ -180,6 +180,7 @@ export class musicSubscription {
 
     public destroy() {
         this.stop(true);
+        this.player.state = 'NOTCONNECTED';
         this.voiceConnection.destroy();
     }
 
