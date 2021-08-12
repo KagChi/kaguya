@@ -16,16 +16,19 @@ import { raw as ytdl } from 'youtube-dl-exec';
 import { tracks } from 'track-resolver';
 import kaguyaPlayer from './playerHandler';
 import { FFmpeg } from 'prism-media';
+import { PlayerFilterOptions } from '../typings';
 
 export class musicSubscription {
     public readonly voiceConnection: VoiceConnection;
     public audioPlayer: AudioPlayer | undefined;
-    public _filters = [];
+    public _filters: string[] = [];
     public _currentTrack: tracks | undefined;
     public initial = false;
     private readyLock = false;
-    private _currentResource: AudioResource | null = null;
+    private _currentResource: AudioResource<tracks> | null = null;
     private subscription: PlayerSubscription | undefined;
+    private seekTime = 0;
+    private applyingFilters = false;
     public constructor(voiceConnection: VoiceConnection, public player: kaguyaPlayer) {
         this.voiceConnection = voiceConnection;
         this.voiceConnection.on("stateChange", async (_, newState) => {
@@ -92,7 +95,16 @@ export class musicSubscription {
                             let final;
                             if (this._filters.length) {
                                 const toApply = ["-i", "-", "-analyzeduration", "0", "-loglevel", "0", "-f", "s16le", "-ar", "48000", "-ac", "2"];
+                                if (this.streamTime && !this._filters.includes("-ss")) {
+                                    toApply.unshift("-ss", `${this.streamTime + 2000}ms`, "-accurate_seek");
+                                    this.seekTime = this.streamTime + 2000;
+                                } else if (this._filters.includes("-ss")) { // came from Queue.seek option. this.seekTime should be set already.
+                                    const index = this._filters.indexOf("-ss");
+                                    toApply.unshift(...this._filters.slice(index, index + 2));
+                                    this._filters.splice(index, 3);
+                                }
                                 if (this._filters.length) toApply.push("-af");
+                                this.applyingFilters = false
                                 const argus = toApply.concat(this._filters);
                                 const transcoder = new FFmpeg({ args: argus });
                                 
@@ -121,13 +133,55 @@ export class musicSubscription {
 
 
     public async play(track: tracks) {
+        if (!this.applyingFilters) this.initial = true;
         const stream = await this.createStream(track);
         this._currentResource = stream
         const newPlayer = createAudioPlayer();
         this._applyPlayerEvents(newPlayer);
         newPlayer.play(stream);
-        this.initial = true;
+        
     }
+
+    public filters(filters: PlayerFilterOptions) {
+        const toApply: Array<string> = [];
+        if (this._filters.includes("-ss")) toApply.push("-ss", this._filters[this._filters.indexOf("-ss") + 2]);
+        this._filters.length = 0;
+        if (filters.volume) this.setVolume(filters.volume);
+        if (filters.equalizer && Array.isArray(filters.equalizer) && filters.equalizer.length) {
+            const bandSettings = Array(15).map((_, index) => ({ band: index, gain: 0.2 }));
+            for (const eq of filters.equalizer) {
+                const cur = bandSettings.find(i => i.band === eq.band);
+                if (cur) cur.gain = eq.gain;
+            }
+            toApply.push(bandSettings.map(i => `equalizer=width_type=h:gain=${Math.round(Math.log2(i.gain) * 12)}`).join(","));
+        }
+        if (filters.timescale) {
+            const rate = filters.timescale.rate || 1.0;
+            const pitch = filters.timescale.pitch || 1.0;
+            const speed = filters.timescale.speed || 1.0;
+            const speeddif = 1.0 - pitch;
+            const finalspeed = speed + speeddif;
+            const ratedif = 1.0 - rate;
+
+            toApply.push(`aresample=48000,asetrate=48000*${pitch + ratedif},atempo=${finalspeed},aresample=48000`);
+        }
+        if (filters.tremolo) {
+            toApply.push(`tremolo=f=${filters.tremolo.frequency || 2.0}:d=${filters.tremolo.depth || 0.5}`);
+        }
+        if (filters.vibrato) {
+            toApply.push(`vibrato=f=${filters.vibrato.frequency || 2.0}:d=${filters.vibrato.depth || 0.5}`);
+        }
+        if (filters.rotation) {
+            toApply.push(`apulsator=hz=${filters.rotation.rotationHz || 0}`);
+        }
+        if (filters.lowPass) {
+            toApply.push(`lowpass=f=${500 / filters.lowPass.smoothing}`);
+        }
+        this._filters.push(...toApply);
+        this.applyingFilters = true;
+        this.play(this._currentTrack as tracks);
+    }
+
 
     public _applyPlayerEvents(player: AudioPlayer) {
         const old = this.audioPlayer;
@@ -139,6 +193,7 @@ export class musicSubscription {
             if (newState.status === AudioPlayerStatus.Idle && oldState.status !== AudioPlayerStatus.Idle) {
                 // If the Idle state is entered from a non-Idle state, it means that an audio resource has finished playing.
 				// The queue is then processed to start playing the next track, if one is available.
+                if (this.applyingFilters) return;
                 if (this._currentTrack) this.player.client.music.emit('trackEnd', this.player, this._currentTrack)
             } else if (newState.status === AudioPlayerStatus.Playing) {
 				// If the Playing state has been entered, then a new track has started playback.
@@ -147,9 +202,8 @@ export class musicSubscription {
                 old?.stop(true);
                 old?.removeAllListeners();
                 this.subscription = this.voiceConnection.subscribe(this.audioPlayer);
-                if (this.initial && this._currentTrack) {
+                if (this.initial && this._currentTrack && !this.applyingFilters) {
                     this.player.client.music.emit('trackStart', this.player, this._currentTrack)
-                    this._currentResource = null;
                     this.initial = false
                 } 
             }
