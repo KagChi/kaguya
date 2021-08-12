@@ -7,27 +7,7 @@
 ![Written](https://camo.githubusercontent.com/a3544e8c62ffc6f9b9dfbbfe7e280b9d22db60ad526dee467542e88b020ad6f3/68747470733a2f2f62616467656e2e6e65742f62616467652f69636f6e2f747970657363726970743f69636f6e3d74797065736372697074266c6162656c)
 ![Database](https://img.shields.io/badge/db-mongodb-orange)
 ## Rich Music Bot
-A music bot with custom playlist support, download music, music filters
-
-## Commands
-> Kaguya
-<br>
-
-![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981253030576159/Screenshot_2021-01-05-18-45-15-99_572064f74bd5f9fa804b05334aa4f912.jpg)
-
-<br>
-
-> Featured
-<br>
-
-![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981608502296587/Screenshot_2021-01-05-18-46-40-75_572064f74bd5f9fa804b05334aa4f912.jpg)
-
-<br>
-
-> Commands
-<br>
-
-![Image](https://cdn.discordapp.com/attachments/746013897512714320/795981912614502430/Screenshot_2021-01-05-18-47-52-87_572064f74bd5f9fa804b05334aa4f912.jpg)
+A music bot with custom playlist support, music downloader, music filters
 
 ## Self Hosting
 > Configuration
@@ -43,7 +23,8 @@ A music bot with custom playlist support, download music, music filters
 ## Requirements
 1. A brain (ofc)
 2. Bot Token 
-4. Node.js v12.x
+4. Node.js v16.x
+
 ## Disclaimer
 >  Keep it free!
 
